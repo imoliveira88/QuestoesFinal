@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>:: Questão de Esforço - Provas e questões de concursos ::</title>
+        <h:outputStylesheet library="css" name="geral.css" />
+    </h:head>
+    <h:body>
+        
+        <table id="menu" align='center'>
+            <tr>
+                <td><h:form><h:link outcome="homeF">Apresentação</h:link></h:form></td>
+                <td><h:form><h:link outcome="funcionario">Funcionários</h:link></h:form></td>
+                <td><h:form><h:link outcome="organizadora">Organizadoras</h:link></h:form></td>
+                <td><h:form><h:link outcome="disciplina">Disciplinas</h:link></h:form></td>
+                <td><h:form><h:link outcome="questao">Questões</h:link></h:form></td>
+            </tr>
+        </table>
+        
+        <br/>
+        <br/>
+        
+        <table id="corpo" align="center">
+            <tr>
+                <td>
+                    <h:form><h:commandButton class="botao" value="Logout" action="#{logoutBean.logout}"/></h:form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h1>Cadastro de Questões</h1>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h:form>
+
+                        <p:growl id="msgs" for="destinoAviso" autoUpdate="true"/>
+
+                        <p:fieldset legend="Dados da Questao" style="margin-bottom:20px">
+
+                            <p:outputLabel for="organizadora" value="Organizadora: " />
+                            <h:selectOneMenu id="organizadora" value="#{questaoMB.organizadora}" style="width:150px" requiredMessage="Valor é obrigatório" converter="simpleConverter">
+                                <f:selectItems value="#{questaoMB.organizadoras}" var="organizadora" itemValue="#{organizadora}"/>
+                            </h:selectOneMenu>
+                            <f:attribute name="organizadora" value="#{organizadora}" />
+
+                            <p:outputLabel for="disciplina" value="Disciplina: " />
+                            <h:selectOneMenu id="disciplina" value="#{questaoMB.disciplina}" style="width:150px" requiredMessage="Valor é obrigatório" converter="simpleConverter">
+                                <f:selectItems value="#{questaoMB.disciplinas}" var="disciplina" itemValue="#{disciplina}"/>
+                            </h:selectOneMenu>
+                            <f:attribute name="disciplina" value="#{disciplina}" />
+
+                            <h:panelGrid columns="2" id = "basico"  cellpadding="5">
+
+                                <h:outputText value="Ano: " />
+                                <h:inputText value="#{questaoMB.ano}" size="5" />
+
+                                <p:outputLabel for="enunciado" value="Enunciado: " />
+                                <p:inputTextarea id="enunciado" rows="5" cols="40" value="#{questaoMB.enunciado}" />
+                                
+                                <h:outputText value="Alternativa A: " />
+                                <h:inputText value="#{questaoMB.alternativaA}" size="40" />
+
+                                <h:outputText value="Alternativa B: " />
+                                <h:inputText value="#{questaoMB.alternativaB}" size="40" />
+
+                                <h:outputText value="Alternativa C: " />
+                                <h:inputText value="#{questaoMB.alternativaC}" size="40" />
+
+                                <h:outputText value="Alternativa D: " />
+                                <h:inputText value="#{questaoMB.alternativaD}" size="40" />
+
+                                <h:outputText value="Alternativa E: " />
+                                <h:inputText value="#{questaoMB.alternativaE}" size="40" />
+
+                                <p:outputLabel for="correta" value="Alternativa Correta: " />
+                                <p:selectOneMenu id="correta" value="#{questaoMB.correta}">
+                                    <f:selectItem itemLabel="A" itemValue="A" />
+                                    <f:selectItem itemLabel="B" itemValue="B" />
+                                    <f:selectItem itemLabel="C" itemValue="C" />
+                                    <f:selectItem itemLabel="D" itemValue="D" />
+                                    <f:selectItem itemLabel="E" itemValue="E" />
+                                </p:selectOneMenu>
+                               
+                            </h:panelGrid>
+                        </p:fieldset>
+
+                        <h:commandButton class="botao" value="Salvar" action="#{questaoMB.salvar}"/>
+
+                    </h:form> 
+                    
+                </td>
+                 
+            </tr>
+        </table>
+    </h:body>
+</html>
+

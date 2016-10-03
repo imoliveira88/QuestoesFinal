@@ -46,7 +46,7 @@ public class Questao implements Serializable, BaseEntity{
     @ManyToMany(mappedBy = "questoes")
     private List<Cliente> clientes;
     
-    @Size(max = 200)
+    @Size(max = 500)
     @Column(name = "ENUNCIADO1")
     private String enunciado1;
     

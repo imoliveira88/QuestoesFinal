@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>:: Questão de Esforço - Provas e questões de concursos ::</title>
+        <h:outputStylesheet library="css" name="geral.css" />
+        <script src='https://www.google.com/recaptcha/api.js' />
+    </h:head>
+    <h:body>
+        <table id="menu" align='center'>
+            <tr>
+                <td onclick="location.href='login.xhtml'">Login</td>
+                <td onclick="location.href='index.xhtml'">Apresentação</td>
+                <td onclick="location.href='contato.xhtml'">Contato</td>
+            </tr>
+        </table>
+
+        
+        <br/>
+        <br/>
+         
+        <table id="corpo" align="center">
+            <tr>
+                <td>
+                    <h:form id="loginForm">
+                        <p:fieldset legend="Login" style="margin-bottom:20px">
+                            <p:growl for="destinoAviso" id="growl" autoUpdate="true" />
+                            <h:panelGrid columns="2" cellpadding="5">
+
+                                <h:outputText value="Login (e-mail): " />
+                                <h:inputText id="login" value="#{loginBean2.login}" size="20" required="true" />
+
+                                <h:outputText value="Senha: " />
+                                <h:inputSecret id="senha" value="#{loginBean2.senha}" size="20" required="true"/>
+                                
+                                <div class="g-recaptcha" data-sitekey="#{facesContext.externalContext.getInitParameter('PUBLIC_CAPTCHA_KEY')}"/>
+
+                                <h:commandButton value="Login" action="#{loginBean2.login}" class="botao" />
+
+                                <f:facet name="footer">
+                                    <a href='cadastro_cliente.xhtml'>Não tem cadastro? Clique aqui!</a>
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:fieldset>
+                    </h:form>
+                </td>
+            </tr>
+        </table>
+    </h:body>
+</html>
+

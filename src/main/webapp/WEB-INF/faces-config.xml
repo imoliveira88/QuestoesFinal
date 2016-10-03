@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+    
+    <navigation-rule>
+        <from-view-id>/publico/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>homeC</from-outcome>
+            <to-view-id>/cliente/index.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>homeF</from-outcome>
+            <to-view-id>/admin/index.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/publico/login.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cliente</from-outcome>
+            <to-view-id>/publico/cadastro_cliente.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>sair</from-outcome>
+            <to-view-id>/publico/login.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>funcionario</from-outcome>
+            <to-view-id>/admin/cadastro_funcionario.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>organizadora</from-outcome>
+            <to-view-id>/admin/cadastro_organizadora.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>homeF</from-outcome>
+            <to-view-id>/admin/index.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>  
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>disciplina</from-outcome>
+            <to-view-id>/admin/cadastro_disciplina.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>      
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>questao</from-outcome>
+            <to-view-id>/admin/cadastro_questao</to-view-id>
+        </navigation-case>        
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>pessoas</from-outcome>
+            <to-view-id>/admin/pessoas.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>      
+    
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>questaoUsu</from-outcome>
+            <to-view-id>/cliente/questoes.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>homeC</from-outcome>
+            <to-view-id>/cliente/index.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>estatistica</from-outcome>
+            <to-view-id>/cliente/estatistica.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>         
+    
+    
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>inicio</from-outcome>
+            <to-view-id>/publico/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+</faces-config>
