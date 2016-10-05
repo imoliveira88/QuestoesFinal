@@ -27,7 +27,7 @@
                 <td>
                     <h:form id="loginForm">
                         <p:fieldset legend="Login" style="margin-bottom:20px">
-                            <p:growl for="destinoAviso" id="growl" autoUpdate="true" />
+                            <p:growl for="destinoAviso" id="growl" autoUpdate="true" showDetail="true"/>
                             <h:panelGrid columns="2" cellpadding="5">
 
                                 <h:outputText value="Login (e-mail): " />
@@ -36,9 +36,7 @@
                                 <h:outputText value="Senha: " />
                                 <h:inputSecret id="senha" value="#{loginBean2.senha}" size="20" required="true"/>
                                 
-                                <div class="g-recaptcha" data-sitekey="#{facesContext.externalContext.getInitParameter('PUBLIC_CAPTCHA_KEY')}"/>
-
-                                <h:commandButton value="Login" action="#{loginBean2.login}" class="botao" />
+                                <h:commandButton value="Login" action="#{loginBean2.login()}" class="botao" />
 
                                 <f:facet name="footer">
                                     <a href='cadastro_cliente.xhtml'>Não tem cadastro? Clique aqui!</a>

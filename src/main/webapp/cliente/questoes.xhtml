@@ -46,12 +46,6 @@
                             </h:selectOneMenu>
                             <f:attribute name="escolha" value="#{disciplina.descricao}" />
                         
-                            <p:outputLabel for="categoria" value="Categoria: " />
-                            <h:selectOneMenu id="categoria" value="#{questaoMB.categoria}" style="width:150px" requiredMessage="Valor é obrigatório" converter="simpleConverter">
-                                <f:selectItems value="#{questaoMB.categorias}" var="organizadora" itemValue="#{categoria}"/>
-                            </h:selectOneMenu>
-                            <f:attribute name="escolha" value="#{categoria.descricao}" />
-                            
                             <p:selectOneRadio id="nada" value="#{questaoMB.nada}">
                                 <f:selectItem itemLabel="Sem filtros" itemValue="true" />
                             </p:selectOneRadio>

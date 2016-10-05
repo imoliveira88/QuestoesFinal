@@ -58,10 +58,12 @@ public class Cliente extends Usuario {
         questoes.add(questao);
     }
     
+    @Override
     public String getTipo(){
         return "Cliente";
     }
     
+    @Override
     public void setTipo(String tipo){
         this.tipo = tipo;
     }

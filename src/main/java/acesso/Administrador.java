@@ -15,10 +15,12 @@ public class Administrador extends Usuario {
     
     public Administrador(){};
     
+    @Override
     public String getTipo(){
         return "Admin";
     }
     
+    @Override
     public void setTipo(String tipo){
         this.tipo = tipo;
     }

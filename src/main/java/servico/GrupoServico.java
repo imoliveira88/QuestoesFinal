@@ -9,7 +9,6 @@ import static javax.ejb.TransactionAttributeType.SUPPORTS;
 import static javax.ejb.TransactionManagementType.CONTAINER;
 
 import acesso.Grupo;
-import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.PermitAll;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -30,11 +29,10 @@ public class GrupoServico extends Servico<Grupo> {
         query.setParameter("nome", nomeGrupo);
         
         return query.getSingleResult();
-        //return getEntidade("Grupo.GRUPO_POR_NOME", new Object[]{nomeGrupo});
     }
     
     public Grupo getGrupo(Long id){
-        Grupo grupo = null;
+        Grupo grupo;
         
         grupo = entityManager.find(Grupo.class, id);
         

@@ -1,14 +1,9 @@
 package acesso;
 
 import java.io.Serializable;
-import java.nio.charset.Charset;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -55,9 +50,6 @@ public abstract class Usuario implements Serializable {
     @Column(name = "SENHA")
     private String senha;
     
-    @Column(name = "TXT_SAL")
-    private String sal;
-    
     @NotBlank
     @Size(max = 35)
     @Column(name = "LOGIN")
@@ -66,33 +58,6 @@ public abstract class Usuario implements Serializable {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "TB_USUARIO_GRUPO")
     private List<Grupo> grupos;
-    
-    @PrePersist
-    public void gerarHash() {
-        try {
-            gerarSal();
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            setSenha(senha + sal.substring(0,3));
-            digest.update(senha.getBytes(Charset.forName("UTF-8")));
-            setSenha(Base64.getEncoder().encodeToString(digest.digest()));
-        } catch (NoSuchAlgorithmException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    private void gerarSal() throws NoSuchAlgorithmException {
-        int tamanho = Math.abs(this.nome.length()*this.senha.length() - this.senha.length());
-        int funcao = (int) (Math.pow(2, tamanho)+Math.atan(3*tamanho));
-        setSal(""+funcao);
-    }
-
-    public String getSal() {
-        return sal;
-    }
-
-    public void setSal(String sal) {
-        this.sal = sal;
-    }
 
     public String getNome() {
         return this.nome;
