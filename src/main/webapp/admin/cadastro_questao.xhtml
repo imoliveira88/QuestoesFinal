@@ -22,13 +22,13 @@
                         <p:fieldset legend="Dados da Questão" style="margin-bottom:20px">
 
                             <p:outputLabel for="organizadora" value="Organizadora: " />
-                            <h:selectOneMenu id="organizadora" value="#{questaoMB.organizadora}"  style="width:150px" requiredMessage="Valor é obrigatório" converter="simpleConverter">
+                            <h:selectOneMenu id="organizadora" value="#{questaoMB.organizadora}"  style="width:200px" requiredMessage="Valor é obrigatório" converter="simpleConverter">
                                 <f:selectItems value="#{questaoMB.organizadoras}" var="organizadora" itemValue="#{organizadora}"/>
                             </h:selectOneMenu>
                             <f:attribute name="organizadora" value="#{organizadora}" />
 
                             <p:outputLabel for="disciplina" value="Disciplina: " />
-                            <h:selectOneMenu id="disciplina" value="#{questaoMB.disciplina}" style="width:150px" requiredMessage="Valor é obrigatório" converter="simpleConverter">
+                            <h:selectOneMenu id="disciplina" value="#{questaoMB.disciplina}" style="width:270px" requiredMessage="Valor é obrigatório" converter="simpleConverter">
                                 <f:selectItems value="#{questaoMB.disciplinas}" var="disciplina" itemValue="#{disciplina}"/>
                             </h:selectOneMenu>
                             <f:attribute name="disciplina" value="#{disciplina}" />
