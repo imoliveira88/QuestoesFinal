@@ -2,41 +2,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>:: Questão de Esforço - Provas e questões de concursos ::</title>
+        <title>MinhaMeta</title>
         <h:outputStylesheet library="css" name="geral.css" />
     </h:head>
     <h:body>
-        <table id="menu" align='center'>
-            <tr>
-                <td><h:form><h:link outcome="homeC">Apresentação</h:link></h:form></td>
-                <td><h:form><h:link outcome="questaoUsu">Resolva Questões</h:link></h:form></td>
-                <td><h:form><h:link outcome="estatistica">Estatística</h:link></h:form></td>
-            </tr>
-        </table>
-        
+        <ui:decorate template="/templates/clienteDecorator.xhtml">
         <table id="corpo" align="center">
-            <tr>
-                <td>
-                    <h:form><h:commandButton class="botao" value="Logout" action="#{logoutBean.logout}"/></h:form>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h1>Estatística</h1>
-
-                    <br/>
-                    <br/>
-
-                </td>
-            </tr>
             <tr>
                 <td>
                     <h:form ><p:chart type="pie" model="#{chartView.pieModel1}" style="width:400px;height:300px" /></h:form>
                 </td>
             </tr>
         </table>
+        </ui:decorate>
     </h:body>
 </html>
 

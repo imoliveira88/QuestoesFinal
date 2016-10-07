@@ -4,68 +4,40 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>:: Questão de Esforço - Provas e questões de concursos ::</title>
+        <title>MinhaMeta</title>
         <h:outputStylesheet library="css" name="geral.css" />
     </h:head>
     <h:body>
-        
-        <table id="menu" align='center'>
-            <tr>
-                <td><h:form><h:link outcome="homeF">Apresentação</h:link></h:form></td>
-                <td><h:form><h:link outcome="funcionario">Funcionários</h:link></h:form></td>
-                <td><h:form><h:link outcome="organizadora">Organizadoras</h:link></h:form></td>
-                <td><h:form><h:link outcome="disciplina">Disciplinas</h:link></h:form></td>
-                <td><h:form><h:link outcome="questao">Questões</h:link></h:form></td>
-            </tr>
-        </table>
-        
-        <br/>
-        <br/>
-        
-        <table cellpadding="0" cellspacing="100px">
-            <tr>
-                <td>
-                    <h:form><h:commandButton class="botao" value="Logout" action="#{logoutBean.logout}"/></h:form>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <h1>Cadastro de Organizadoras</h1>
-
-                </td>
-            </tr>
-            <tr>
-                <td>
-                                       
+        <ui:decorate template="/templates/funcionarioDecorator.xhtml">
+            <h2>Cadastro de Bancas Organizadoras</h2>
+            <div class="cadastroLeft">
                     <h:form enctype="multipart/form-data">
                         <p:growl id="msgs" for="destinoAviso" showDetail="true" />
                         <p:fieldset legend="Cadastrar Organizadora" style="margin-bottom:20px">
                             <h:panelGrid columns="2">
-                                Nome: <h:inputText value="#{organizadoraMB.organizadora.descricao}"/>
+                                Nome      : <h:inputText value="#{organizadoraMB.organizadora.descricao}"/>
 
-                                <h:commandButton action="#{organizadoraMB.salvar}" value="Salvar" />
+                                <h:commandButton class="botao" action="#{organizadoraMB.salvar}" value="Salvar" />
                             </h:panelGrid> 
                         </p:fieldset>
                     </h:form>
                     <h:form>
                         <p:fieldset legend="Excluir Organizadora" style="margin-bottom:20px">
+                            <h:panelGrid columns="2">
                             <p:outputLabel value="Organizadora:" />
                             <h:selectOneMenu value="#{organizadoraMB.organizadora}" style="width:125px" requiredMessage="Valor é obrigatório" converter="simpleConverter">
                                 <f:selectItems value="#{organizadoraMB.organizadoras}" var="organizadora" itemValue="#{organizadora}"/>
                             </h:selectOneMenu>
                             <f:attribute name="escolha" value="#{organizadora.descricao}" />
-                            
-                            <br/>
-                            <h:commandButton value="Remover Item" action="#{organizadoraMB.excluir}"/>
+                            <h:commandButton class="botao" value="Excluir" action="#{organizadoraMB.excluir}"/>
+                            </h:panelGrid>
                         </p:fieldset>
-                        
-                        
                     </h:form>
-                    
-                </td>
-                <td>
+                </div>
+                <div class="cadastroRight">
                     <h:form enctype="multipart/form-data">
                         <p:fieldset legend="Organizadoras Cadastradas" style="margin-bottom:20px">
                             <p:dataTable var="organizadora" value="#{organizadoraMB.organizadoras}" >
@@ -76,11 +48,9 @@
                             </p:dataTable>
                         </p:fieldset>
                     </h:form>
-                     
-                </td>
-            </tr>
-        </table>
-
+                </div>
+            
+        </ui:decorate>
     </h:body>
 </html>
 

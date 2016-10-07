@@ -1,15 +1,61 @@
-body{
-        background:black;
-        font-family: sans-serif;
-        font-size: 16px;  
+@font-face {
+      font-family: 'Eras';
+      src: local('ERASDEMI.TTF'), url('font/ERASDEMI.TTF');
+      font-weight: normal;
+      font-style: normal;
+    }
+    
+@font-face {
+      font-family: 'ErasLht';
+      src: local('ERASMD.TTF'), url('font/ERASMD.TTF');
+      font-weight: normal;
+      font-style: normal;
+    }
+    
+body {
+    display: table;
+    margin: 0px;
+    width: 100%;
+    background: #D0D2D4;
+    font-family: ErasLht, sans-serif;
+    font-size: 19px;
 }
 
-h1 {
-    text-align: left;
-  animation-duration: 3s;
+h1.animate {
+    text-align: center;
+  animation-duration: 2s;
   animation-name: slidein;
-  background-color: black;
-  color: white;
+  color: green;
+}
+h1, h2 {
+  text-align: center;
+  color: green;
+}
+
+#heading {
+    width: 100%;
+    background-color: #2E3092;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    height: 100px;
+}
+
+
+
+
+#heading img{
+width:20%;
+margin-left: 5%;
+vertical-align:baseline;
+}
+
+#heading h2{
+display: inline-block;
+width: 70%;
+text-align: center;
+color: whitesmoke;
+font: 2em Eras, Sans-serif;
+
 }
 
 @keyframes slidein {
@@ -60,34 +106,103 @@ table#listas td:hover{
 	cursor: pointer;       
 }
 
-table#menu{
+table#menu, .botao{
         border: 1px solid #656565;
         border-radius: 10px;
         box-shadow: 10px 10px 5px #888888;
 	width: 90%;
-	background-color: #000000;
+	background-color: #0071BB;
+        background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,.3));
 	text-align: center;
         color: #ffffff;
-	height: 60px;
-        border: orange 1px solid;
+	height: 40px;        
+        margin-top: 10px;
+        font-size: 1.2em;
+}
+
+.botao{
+    width: 130px;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-shadow: 0px 0px 0px #888888;
+    background-color: limegreen;
+}
+
+.botao:hover{
+    background-color: green;
+    background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,.3));
+    font-family: Eras, sans-serif;
+    cursor: pointer; 
+    color: yellow;
+    box-shadow: 5px 5px 3px #888888;
 }
 
 table#menu td{
 	width: 15%;
         border-radius: 10px;        
 }
+
 table#corpo{
 	width: 70%;
-        background-color: white;
-	text-align: justify;
-        appearance: desktop;
+        margin-top: -20px;
+}
+
+table#corpo2{
+	width: 70%;
+        margin-top: 15px;
 }
 
 table#menu td:hover{
-	background-color: #ffffff;
-	font-weight: bold;
-	cursor: pointer;
-        color: #000000;        
+	background-color: #0000AA;
+        background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,.3));
+	font-family: Eras, sans-serif;
+	cursor: pointer; 
+        color: yellow;
+}
+
+.cadastroLeft {
+ display: inline;
+ width: 30%;
+ float: left;
+ padding-left: 5%;
+ padding-right: 1%;
+}
+
+.cadastroRight {
+ display: inline;
+ width: 60%;
+ float: right;
+ padding-right: 4%;
+}
+
+.cmdLink{
+    text-decoration:none;
+    color: #ffffff;
+}
+.cmdLink:hover{
+    text-decoration:none;
+    color: yellow;
+}
+
+.cmdLink2{
+    text-decoration:none;
+}
+
+.cmdLink2:hover{
+    text-decoration:none;
+    color:red;
+}
+
+#welcome{
+    position: absolute;
+    right: 20px;
+    top: 20px;    
+}
+
+.welcome{
+    text-align: left;
+    margin-top: 1px;
+    color: yellow;
 }
 
 .destaque {
@@ -97,11 +212,25 @@ table#menu td:hover{
 
 .chamativo {
     font-weight: bold;
-    font-style: italic;
     color: green;
+    font-size: 1.3em;
 }
 
 .explicativo {
     background-color: lawngreen;
     width: 40%;
+}
+
+.invalid{
+    padding-left: 4px;
+    color: red;
+    font-family: ErasLht, sans-serif;
+}
+
+.ui-widget select{
+    margin-right: 15px;
+}
+
+.ui-widget, .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+    font-family: ErasLht, sans-serif;
 }

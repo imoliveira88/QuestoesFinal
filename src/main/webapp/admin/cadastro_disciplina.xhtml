@@ -3,68 +3,41 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>:: Questão de Esforço - Provas e questões de concursos ::</title>
+        <title>MinhaMeta</title>
         <h:outputStylesheet library="css" name="geral.css" />
     </h:head>
     <h:body>
-        
-        <table id="menu" align='center'>
-            <tr>
-                <td><h:form><h:link outcome="homeF">Apresentação</h:link></h:form></td>
-                <td><h:form><h:link outcome="funcionario">Funcionários</h:link></h:form></td>
-                <td><h:form><h:link outcome="organizadora">Organizadoras</h:link></h:form></td>
-                <td><h:form><h:link outcome="disciplina">Disciplinas</h:link></h:form></td>
-                <td><h:form><h:link outcome="questao">Questões</h:link></h:form></td>
-            </tr>
-        </table>
-        
-        
-        <br/>
-        <br/>
-        
-        <table cellpadding="0" cellspacing="100px">
-            <tr>
-                <td>
-                    <h:form><h:commandButton class="botao" value="Logout" action="#{logoutBean.logout}"/></h:form>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <h1>Cadastro de Disciplinas</h1>
-
-                </td>
-            </tr>
-            <tr>
-                <td>
-                   
+        <ui:decorate template="/templates/funcionarioDecorator.xhtml">
+        <h2>Cadastro de Disciplinas</h2>
+        <div class="cadastroLeft">    
                     <h:form enctype="multipart/form-data">
                         <p:growl id="msgs" for="destinoAviso" autoUpdate="true" />
                         <p:fieldset legend="Cadastrar Disciplinas" style="margin-bottom:20px">
                             <h:panelGrid columns="2">
                                 Nome: <h:inputText value="#{disciplinaMB.disciplina}"/>
 
-                                <h:commandButton action="#{disciplinaMB.salvar}" value="Salvar" />
+                                <h:commandButton class="botao" action="#{disciplinaMB.salvar}" value="Salvar" />
                             </h:panelGrid> 
                         </p:fieldset>
                     </h:form>
                     <h:form>
                         <p:fieldset legend="Excluir Disciplina" style="margin-bottom:20px">
+                            <h:panelGrid columns="2">
                             <p:outputLabel value="Disciplina:" />
                             <h:selectOneMenu value="#{disciplinaMB.disciplina}" style="width:125px" requiredMessage="Valor é obrigatório" converter="simpleConverter">
                                 <f:selectItems value="#{disciplinaMB.disciplinas}" var="disciplina" itemValue="#{disciplina}"/>
                             </h:selectOneMenu>
-                            <f:attribute name="escolha" value="#{disciplina}" />
-                            
-                            <br/>
-                            <h:commandButton value="Remover Item" action="#{disciplinaMB.excluir}"/>
+                            <f:attribute name="escolha" value="#{disciplina}" />                            
+                            <h:commandButton class="botao" value="Excluir" action="#{disciplinaMB.excluir}"/>
+                            </h:panelGrid>
                         </p:fieldset>
                         
                     </h:form>
-                    
-                </td>
-                <td>
+                </div>    
+                <div class="cadastroRight">
                     <h:form enctype="multipart/form-data">
                         <p:fieldset legend="Disciplinas Cadastradas" style="margin-bottom:20px">
                             <p:dataTable var="disciplina" value="#{disciplinaMB.disciplinas}" >
@@ -75,10 +48,8 @@
                             </p:dataTable>
                         </p:fieldset>
                     </h:form>
-                     
-                </td>
-            </tr>
-        </table>
+                </div>
+        </ui:decorate>
     </h:body>
 </html>
 

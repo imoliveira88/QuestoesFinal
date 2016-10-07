@@ -68,6 +68,7 @@ public class DisciplinaMB{
             if(discServico.salvar(new Disciplina(disciplina))){
                 msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Cadastro feito com sucesso!");
                 context.addMessage("destinoAviso", msg);
+                this.setDisciplina("");
             }else{
                 msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Já existe uma disciplina com o nome escolhido!");
                 context.addMessage("destinoAviso", msg);
@@ -90,6 +91,7 @@ public class DisciplinaMB{
             this.disciplinas.remove(disc);
             msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Disciplina excluída com sucesso!");
             context.addMessage("destinoAviso", msg);
+            this.setDisciplina("");
             return "disciplina";
         }catch(Exception e){
             msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Houve um erro na exclusão! Provavelmente a disciplina está relacionada a alguma questão salva no banco!");

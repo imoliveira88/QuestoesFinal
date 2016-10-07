@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+   <head><title>IGNORED</title></head>
+   <body>
+      <ui:composition>
+        <table id="menu" align='center'>
+            <tr>
+                <td onclick="location.href='cadastro_organizadora.xhtml'">Organizadoras</td>
+                <td onclick="location.href='cadastro_disciplina.xhtml'">Disciplinas</td>
+                <td onclick="location.href='cadastro_questao.xhtml'">Questões</td>
+                <td onclick="location.href='cadastro_funcionario.xhtml'">Funcionários</td>
+                <td><h:form><h:commandLink class="cmdLink" value="Logout" action="#{logoutBean.logout}"/></h:form></td>
+            </tr>
+        </table>
+      </ui:composition>
+   </body>
+</html>

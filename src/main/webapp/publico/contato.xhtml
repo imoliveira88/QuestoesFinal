@@ -2,34 +2,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>:: Questão de Esforço - Provas e questões de concursos ::</title>
+        <title>MinhaMeta</title>
         <h:outputStylesheet library="css" name="geral.css" />
     </h:head>
     <body>
-        
-        <table id="menu" align='center'>
+        <ui:decorate template="/templates/masterDecorator.xhtml">
+        <h1 class="animate">Fale conosco!</h1>
+        <table id="corpo" align="center">
             <tr>
-                <td onclick="location.href='login.xhtml'">Login</td>
-                <td onclick="location.href='index.xhtml'">Apresentação</td>
-                <td onclick="location.href='contato.xhtml'">Contato</td>
-            </tr>
-            
-        </table>
-        
-        <br/>
-        <br/>
-        <table id="corpo">
-            <tr>
-                <td>
-                    <h1>Entre em contato conosco!</h1>
-                    <p>Telefone: (81) 3234-5678</p>
-                    <p>E-mail: contato@questaodeesforco.com</p>
+                <td>                    
+                    <div class="chamativo">Sugestões, elogios, reclamações:</div>
+                    <p>Telefone: 81 3234.5678</p>
+                    <p>E-mail: contato@minhameta.com</p>
+                    <p>Encontrou algum conteúdo com erros ou incoerências? Entre em contato para que possamos corrigir.</p>
                 </td>
             </tr>
         </table>
-        
+        </ui:decorate>
             
     </body>
 </html>

@@ -3,25 +3,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>:: Questão de Esforço - Provas e questões de concursos ::</title>
+        <title>MinhaMeta</title>
         <h:outputStylesheet library="css" name="geral.css" />
         <script src='https://www.google.com/recaptcha/api.js' />
     </h:head>
     <h:body>
-        <table id="menu" align='center'>
-            <tr>
-                <td onclick="location.href='login.xhtml'">Login</td>
-                <td onclick="location.href='index.xhtml'">Apresentação</td>
-                <td onclick="location.href='contato.xhtml'">Contato</td>
-            </tr>
-        </table>
-
-        
-        <br/>
-        <br/>
-         
+        <ui:decorate template="/templates/masterDecorator.xhtml">
+        <h2>Entre e comece a estudar agora mesmo!</h2>         
         <table id="corpo" align="center">
             <tr>
                 <td>
@@ -31,22 +22,36 @@
                             <h:panelGrid columns="2" cellpadding="5">
 
                                 <h:outputText value="Login (e-mail): " />
-                                <h:inputText id="login" value="#{loginBean2.login}" size="20" required="true" />
+                                <h:panelGroup>
+                                <h:inputText id="login" value="#{loginBean2.login}" size="20" 
+                                             required="true" requiredMessage="Informe seu email">
+                                    <f:ajax event="blur" render="m_login" />
+                                    <p:watermark for="login" value="email@exemplo.com" />
+                                </h:inputText>
+                                <h:message id="m_login" class="invalid" for="login"/>
+                                </h:panelGroup>
 
                                 <h:outputText value="Senha: " />
-                                <h:inputSecret id="senha" value="#{loginBean2.senha}" size="20" required="true"/>
-                                
+                                <h:panelGroup>
+                                <h:inputSecret id="senha" value="#{loginBean2.senha}" size="20" 
+                                             required="true" requiredMessage="Informe sua senha">
+                                    <f:ajax event="blur" render="m_senha"/>
+                                </h:inputSecret>
+                                    <h:message id="m_senha" class="invalid" for="senha"/>
+                                </h:panelGroup>
                                 <h:commandButton value="Login" action="#{loginBean2.login()}" class="botao" />
 
                                 <f:facet name="footer">
-                                    <a href='cadastro_cliente.xhtml'>Não tem cadastro? Clique aqui!</a>
+                                    <a href='cadastro_cliente.xhtml' class="cmdLink2">Não tem cadastro? Clique aqui!</a>
                                 </f:facet>
+                                
                             </h:panelGrid>
                         </p:fieldset>
                     </h:form>
                 </td>
             </tr>
         </table>
+        </ui:decorate>
     </h:body>
 </html>
 

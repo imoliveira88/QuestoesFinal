@@ -3,36 +3,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>:: Questão de Esforço - Provas e questões de concursos ::</title>
+        <title>MinhaMeta</title>
         <h:outputStylesheet library="css" name="geral.css" />
     </h:head>
     <h:body>
-        
-        <table id="menu" align='center'>
-            <tr>
-                <td onclick="location.href='login.xhtml'">Login</td>
-                <td onclick="location.href='index.xhtml'">Apresentação</td>
-                <td onclick="location.href='contato.xhtml'">Contato</td>
-            </tr>
-        </table>
-        
-        <br/>
-        <br/>
-        
+        <ui:decorate template="/templates/masterDecorator.xhtml">
+        <h2>Cadastro de usuário</h2>       
         <table id="corpo" align="center">
             <tr>
                 <td>
-                    <h1>Cadastro de cliente</h1>
-
-                    <br/>
-                    <br/>
-
+                    
                     <h:form class="formGeral">
                         <p:growl id="msgs" for="destinoAviso" autoUpdate="true"/>
 
-                        <p:fieldset legend="Informações Básicas" style="margin-bottom:20px">
+                        <p:fieldset legend="Informações Básicas" style="margin-bottom:10px">
                             <h:panelGrid columns="2" id = "basico"  cellpadding="5">
 
                                 <p:outputLabel for="nome" value="Nome: " />
@@ -48,7 +35,7 @@
                         </p:fieldset>
 
 
-                        <p:fieldset legend="Informações do Cartão" style="margin-bottom:20px">
+                        <p:fieldset legend="Informações do Cartão" style="margin-bottom:10px">
                             <h:panelGrid columns="2" id = "cartao"  cellpadding="5">
 
                                 <p:outputLabel value="Bandeira: " for="bandeira" />
@@ -62,16 +49,18 @@
 
                                 <p:outputLabel value="Validade" for="data"/>
                                 <p:calendar id="data" value="#{cadastroMB.validade}" />
-
+                                
+                                <h:commandButton class="botao" value="Enviar" action="#{cadastroMB.cadastraCliente}"/>
                             </h:panelGrid>
                         </p:fieldset>
 
-                        <h:commandButton class="botao" value="Enviar" action="#{cadastroMB.cadastraCliente}"/>
+                        
 
                     </h:form> 
                 </td>
             </tr>
         </table>
+        </ui:decorate>
     </h:body>
 </html>
 

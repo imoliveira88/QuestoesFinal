@@ -2,104 +2,80 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-          
+
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>:: Questão de Esforço - Provas e questões de concursos ::</title>
+        <title>MinhaMeta</title>
         <h:outputStylesheet library="css" name="geral.css" />
     </h:head>
     <h:body>
-        <table id="menu" align='center'>
-            <tr>
-                <td><h:form><h:link outcome="homeC">Apresentação</h:link></h:form></td>
-                <td><h:form><h:link outcome="questaoUsu">Resolva Questões</h:link></h:form></td>
-                <td><h:form><h:link outcome="estatistica">Estatística</h:link></h:form></td>
-            </tr>
-        </table>
+        <ui:decorate template="/templates/clienteDecorator.xhtml">
 
-        <table id="corpo" align="center">
-            <tr>
-                <td>
-                    <h:form><h:commandButton class="botao" value="Logout" action="#{logoutBean.logout}"/></h:form>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h1>Questões</h1>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h:form>
-                        <p:growl id="msgs" for="destinoAviso" autoUpdate="true"/>
-                        <p:fieldset legend="Filtro de Questões" style="margin-bottom:20px">
-                            <p:outputLabel for="organizadora" value="Organizadora: " />
-                            <h:selectOneMenu id="organizadora" value="#{questaoMB.organizadora}" style="width:150px" requiredMessage="Valor é obrigatório" converter="simpleConverter">
-                                <f:selectItems value="#{questaoMB.organizadoras}" var="organizadora" itemValue="#{organizadora}"/>
-                            </h:selectOneMenu>
-                            <f:attribute name="escolha" value="#{organizadora.descricao}" />
-                        
-                            <p:outputLabel for="disciplina" value="Disciplina " />
-                            <h:selectOneMenu id="disciplina" value="#{questaoMB.disciplina}" style="width:150px" requiredMessage="Valor é obrigatório" converter="simpleConverter">
-                                <f:selectItems value="#{questaoMB.disciplinas}" var="disciplina" itemValue="#{disciplina}"/>
-                            </h:selectOneMenu>
-                            <f:attribute name="escolha" value="#{disciplina.descricao}" />
-                        
-                            <p:selectOneRadio id="nada" value="#{questaoMB.nada}">
-                                <f:selectItem itemLabel="Sem filtros" itemValue="true" />
-                            </p:selectOneRadio>
-                            
-                            <h:commandButton class="botao" value="Filtre!" action="#{questaoMB.filtrar}"/>
-                        </p:fieldset>
-                        
-                        
-                        <br/>                        
-                        
-                        
-                        <p:dataScroller value="#{questaoMB.questoesCriterio}" var="questao" chunkSize="10">
-                            <f:facet name="header">
-                                Questões
-                            </f:facet>
+            <table id="corpo2" align="center">
+                
+                <tr>
+                    <td>
+                        <h:form>
+                            <p:growl id="msgs" for="destinoAviso" autoUpdate="true"/>
+                            <p:fieldset legend="Filtrar Questões por:" style="margin-bottom:10px">
+                                <p:outputLabel for="organizadora" value="Organizadora: " />
+                                <h:selectOneMenu id="organizadora" value="#{questaoMB.organizadora}" style="width:150px" requiredMessage="Valor é obrigatório" converter="simpleConverter">
+                                    <f:selectItems value="#{questaoMB.organizadoras}" var="organizadora" itemValue="#{organizadora}"/>
+                                </h:selectOneMenu>
+                                <f:attribute name="escolha" value="#{organizadora.descricao}" />
 
-                            <h:panelGrid columns="1" style="width:100%">
+                                <p:outputLabel for="disciplina" value="Disciplina " />
+                                <h:selectOneMenu id="disciplina" value="#{questaoMB.disciplina}" style="width:250px" requiredMessage="Valor é obrigatório" converter="simpleConverter">
+                                    <f:selectItems value="#{questaoMB.disciplinas}" var="disciplina" itemValue="#{disciplina}"/>
+                                </h:selectOneMenu>
+                                <f:attribute name="escolha" value="#{disciplina.descricao}" />
+                                
+                            </p:fieldset>
 
-                                <p:outputPanel>
-                                    <h:panelGrid columns="2" cellpadding="5">
-                                        <h:outputText value="Id:" />
-                                        <h:outputText value="#{questao.id}" style="font-weight: bold"/>
-                                        
-                                        <h:outputText value="Organizadora:" />
-                                        <h:outputText value="#{questao.organizadora}" style="font-weight: bold"/>
+                            <p:dataScroller value="#{questaoMB.questoesCriterio}" var="questao" chunkSize="10">
+                                <f:facet name="header">
+                                    Questões
+                                </f:facet>
 
-                                        <h:outputText value="Ano:" />
-                                        <h:outputText value="#{questao.ano}" style="font-weight: bold"/>
+                                <h:panelGrid columns="1" style="width:100%">
 
-                                        <h:outputText value="Disciplina:" />
-                                        <h:outputText value="#{questao.disciplina}" style="font-weight: bold"/>
-                                        
-                                        <h:outputText value="Questao:" />
-                                        <h:outputText value="#{questao.enunciado1}" style="font-weight: bold"/>
-                                        
-                                        <p:outputLabel for="escolha" value="Alternativa:" />
-                                        <p:selectOneRadio id="escolha" value="#{questaoMB.alt_escolhida}"  layout="grid" columns="1">
-                                            <f:selectItems value="#{questao.alternativas}" var="alternativa" itemLabel="#{alternativa}" itemValue="#{questao.retornaLetra(alternativa)}"/>
-                                        </p:selectOneRadio>
-                                        
-                                        <h:commandButton class="botao" value="Marcar!" action="#{questaoMB.verificaResposta(questao.id)}"/>
-                                        
-                                    </h:panelGrid>
-                                </p:outputPanel>
-                            </h:panelGrid>
-                        </p:dataScroller>    
-                        
-                    </h:form> 
-                    
-                </td>
-                 
-            </tr>
-        </table>
-        
+                                    <p:outputPanel>
+                                        <h:panelGrid columns="2" cellpadding="5">
+                                            
+                                            <h:outputText value="Organizadora:" />
+                                            <h:outputText value="#{questao.organizadora}" style="font-weight: bold"/>
+
+                                            <h:outputText value="Ano:" />
+                                            <h:outputText value="#{questao.ano}" style="font-weight: bold"/>
+
+                                            <h:outputText value="Disciplina:" />
+                                            <h:outputText value="#{questao.disciplina}" style="font-weight: bold"/>
+
+                                            <h:outputText value="Questao:" />
+                                            <h:outputText value="#{questao.enunciado1}" style="font-weight: bold"/>
+
+                                            <p:outputLabel for="escolha" value="Alternativa:" />
+                                            <p:selectOneRadio id="escolha" value="#{questaoMB.alt_escolhida}"  layout="grid" columns="1">
+                                                <f:selectItems value="#{questao.alternativas}" var="alternativa" itemLabel="#{alternativa}" itemValue="#{questao.retornaLetra(alternativa)}"/>
+                                            </p:selectOneRadio>
+
+                                            <h:commandButton class="botao" value="Responder" action="#{questaoMB.verificaResposta(questao.id)}"/>
+
+                                        </h:panelGrid>
+                                    </p:outputPanel>
+                                </h:panelGrid>
+                            </p:dataScroller>    
+
+                        </h:form> 
+
+                    </td>
+
+                </tr>
+            </table>
+        </ui:decorate>
+
     </h:body>
 </html>
 

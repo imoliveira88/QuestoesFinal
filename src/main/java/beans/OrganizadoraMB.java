@@ -52,6 +52,7 @@ public class OrganizadoraMB{
             if(orgServico.salvar(organizadora)){
                 msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Cadastro feito com sucesso!");
                 context.addMessage("destinoAviso", msg);
+                this.setOrganizadora(null);
             }else{
                 msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Já existe uma organizadora com o nome escolhido!");
                 context.addMessage("destinoAviso", msg);
@@ -76,6 +77,7 @@ public class OrganizadoraMB{
             this.organizadoras.remove(organizadora);
             msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Organizadora excluída com sucesso!");
             context.addMessage("destinoAviso", msg);
+            this.setOrganizadora(null);
             return "organizadora";
         }catch(Exception e){
             msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Houve uma falha na exclusão da organizadora. Provavelmente o registro está relacionado a outros persistidos no banco.");
