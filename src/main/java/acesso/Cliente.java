@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.*;
 import modelo.Cartao;
 import modelo.Questao;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "TB_CLIENTE")
@@ -37,6 +38,10 @@ public class Cliente extends Usuario {
     
     @Column(name="ERRADAS")
     private int erradas;
+    
+    @Size(max = 20)
+    @Column(name="SKIN")
+    private String skin;
     
     public Cartao getCartao() {
         return cartao;

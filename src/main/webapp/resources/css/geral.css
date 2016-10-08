@@ -234,3 +234,54 @@ table#menu td:hover{
 .ui-widget, .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
     font-family: ErasLht, sans-serif;
 }
+
+.ui-growl-item-container {
+    background-color: yellowgreen;
+}
+
+.ui-growl-icon-close {
+    cursor: pointer;
+    position: absolute;
+    left: 335px;
+    top: 15px;
+}
+
+.ui-growl-title {
+    display:block;
+}
+.ui-growl-message p {
+    font: 20px "Lucida Console", Monaco, monospace;
+    letter-spacing: -1px;
+}
+
+.ui-growl-image {
+	width:32px;
+	height:32px;
+	float:left;
+    margin:0;
+    padding:0;
+    display: block;
+    background: url("#{resource['primefaces:messages/messages.png']}") no-repeat;
+}
+
+.ui-growl-image-info {
+	background-position: 0 -264px;
+}
+
+.ui-growl-image-warn {
+	background-position: 0 -396px;
+}
+
+.ui-growl-image-error {
+	background-position: 0 0;
+}
+
+.ui-growl-image-fatal {
+	background-position: 0 -132px;
+}
+
+.ui-growl-message {
+	padding:0 0 5px 0;
+	width:220px;
+	float:right;
+}
