@@ -28,7 +28,7 @@ import validacao.ValidaAno;
     @NamedQuery(name = "Questao.QUESTOES_POR_ORGANIZADORA", query = "SELECT o FROM Questao o WHERE o.organizadora = ?1"),
     @NamedQuery(name = "Questao.QUESTOES_POR_DISC_ORG", query = "SELECT o FROM Questao o WHERE o.disciplina = ?1 AND o.organizadora = ?2"),
     @NamedQuery(name = "Questao.QUESTAO_POR_ENUNCIADO", query = "SELECT o FROM Questao o WHERE o.enunciado1 = ?1"),
-    @NamedQuery(name = "Questao.QUESTOES_POR_ID", query = "SELECT o FROM Questao o WHERE o.id = ?1")
+    @NamedQuery(name = "Questao.QUESTAO_POR_ID", query = "SELECT o FROM Questao o WHERE o.id = ?1")
 })
 @Table(name = "TB_QUESTAO")        
 public class Questao implements Serializable, BaseEntity{

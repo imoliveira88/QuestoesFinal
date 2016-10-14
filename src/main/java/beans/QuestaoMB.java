@@ -32,7 +32,7 @@ import servico.QuestaoServico;
  */
 @ManagedBean(name = "questaoMB")
 @RequestScoped
-public class QuestaoMB {
+public class QuestaoMB{
     private Questao questao;
     private Cliente cliente;
     private String enunciado;
@@ -51,6 +51,7 @@ public class QuestaoMB {
     private String alternativaD;
     private String alternativaE;
     private char alt_escolhida;
+    private String info;
     
     public QuestaoMB(){
         questoes = new ArrayList<>();
@@ -58,26 +59,7 @@ public class QuestaoMB {
         disciplinas = new ArrayList<>();
         questao = new Questao();
     }
-    
-    @PreDestroy
-    public void destroy() {
-        questao = null;
-        enunciado = null;
-        questoes = null;
-        organizadora = null;
-        organizadoras = null;
-        categoria = null;
-        disciplina = null;
-        disciplinas = null;
-        nada = false;
-        ano = 0;
-        alternativaA = "";
-        alternativaB = "";
-        alternativaC = "";
-        alternativaD = "";
-        alternativaE = "";
-    }
-    
+   
     @EJB
     QuestaoServico questaoServico;
     
@@ -97,6 +79,16 @@ public class QuestaoMB {
     public void setQuestao(Questao questao) {
         this.questao = questao;
     }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+    
+    
 
     public boolean isNada() {
         return nada;
@@ -214,6 +206,12 @@ public class QuestaoMB {
     public void setAlternativaB(String alternativaB) {
         this.alternativaB = alternativaB;
     }
+    
+    public void inicializar(){
+        this.questao = null;
+        this.alt_escolhida = '\0';
+        this.correta = '\0';
+    }
 
     public String getAlternativaC() {
         return alternativaC;
@@ -264,6 +262,7 @@ public class QuestaoMB {
                 msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Já existe uma questão com o mesmo enunciado!");
                 context.addMessage("destinoAviso", msg);
             }
+            
             return "questao";
         }catch(Exception e){
             msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Houve uma falha no cadastro! Atente para os formatos válidos dos campos e tente novamente!");
@@ -295,29 +294,42 @@ public class QuestaoMB {
     public String verificaResposta(long id)throws EJBException{
         FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage msg;
-        try {
+        Cliente cl = new Cliente();
+        try{
             HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
-            cliente = (Cliente) session.getAttribute("usuarioSessao");
-            clienteServico.atualizar(cliente);
-            cliente.addQuestao(questao);
-
+            cliente = (Cliente) session.getAttribute("usuarioDaSessao");
+            
+            cl.setLogin(cliente.getLogin());
+            //clienteServico.adicionaQuestao(cl,questao);
             questao = questaoServico.retornaQuestao(id);
-
-            if (alt_escolhida == questao.getCorreta()) {
-                msg = new FacesMessage(FacesMessage.FACES_MESSAGES, "Você acertou!");
+            
+            if (alt_escolhida == '\0'){
+                msg = new FacesMessage("", "Escolha uma alternativa!");
                 context.addMessage("destinoAviso", msg);
-                cliente.setCorretas(cliente.getCorretas() + 1);
-            } else {
-                msg = new FacesMessage(FacesMessage.FACES_MESSAGES, "Você errou!");
-                context.addMessage("destinoAviso", msg);
-                cliente.setErradas(cliente.getErradas() + 1);
+                return "questaoUsu";
             }
+            
+            if (alt_escolhida == questao.getCorreta()) {
+                msg = new FacesMessage("", "Você acertou!");
+                context.addMessage("destinoAviso", msg);
+                cl.setCorretas(cliente.getCorretas() + 1);
+                cl.setErradas(cliente.getErradas());
+                
+            } else {
+                msg = new FacesMessage("", "Você errou!");
+                context.addMessage("destinoAviso", msg);
+                cl.setErradas(cliente.getErradas() + 1);
+                cl.setCorretas(cliente.getCorretas());
+            }
+            info = "Id da questão: " + id + "  Alternativa correta da questão: " + questao.getCorreta() + "Alternativa marcada: " + this.alt_escolhida;
+            clienteServico.atualizar(cl);
+            inicializar();
             return "questaoUsu";
-        } catch (Exception e) {
-            msg = new FacesMessage(FacesMessage.FACES_MESSAGES, "Houve um erro! Tente novamente!");
+        }catch(Exception e){
+            msg = new FacesMessage("", "Algo deu errado! Tente novamente!");
             context.addMessage("destinoAviso", msg);
+            inicializar();
             return "questaoUsu";
         }
-    }
-    
+    } 
 }

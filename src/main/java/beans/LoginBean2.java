@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpSession;
 import servico.UsuarioServico;
 
 @ManagedBean(name = "loginBean2")
@@ -23,9 +24,12 @@ public class LoginBean2 implements Serializable {
     UsuarioServico usuarioServico;
 
     public String login() throws ServletException,NullPointerException{
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         try {
             if (valida(login, senha)) {
                 usuarioSessao = usuarioServico.retornaUsuario(login);
+                session.setAttribute("usuarioDaSessao", usuarioSessao);
                 if (usuarioSessao.getTipo().equals("Cliente")) {
                     return "homeC";
                 } else {
@@ -34,13 +38,14 @@ public class LoginBean2 implements Serializable {
             } else {
                 setLogin(null);
                 setUsuarioSessao(null);
+                session.setAttribute("usuarioDaSessao", usuarioSessao);
                 adicionarMensagem("Usuário ou senha inválidos!");
                 return "login";
             }
-
         } catch (Exception e) {
             setLogin(null);
             setUsuarioSessao(null);
+            session.setAttribute("usuarioDaSessao", usuarioSessao);
             adicionarMensagem("Senha ou usuário inválidos!");
             return "login";
         }

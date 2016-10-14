@@ -59,6 +59,9 @@ public class AdministradorMB{
         try{
             Administrador adm = new Administrador(nome, login, senha);
             admServico.salvar(adm);
+            nome = "";
+            login = "";
+            senha = "";
             msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Cadastro feito com sucesso!");
             context.addMessage("destinoAviso", msg);
             return "funcionario";

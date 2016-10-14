@@ -18,7 +18,7 @@
                 <tr>
                     <td>
                         <h:form>
-                            <p:growl id="msgs" for="destinoAviso" autoUpdate="true"/>
+                            <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true"/>
                             <p:fieldset legend="Filtrar Questões por:" style="margin-bottom:10px">
                                 <p:outputLabel for="organizadora" value="Organizadora: " />
                                 <h:selectOneMenu id="organizadora" value="#{questaoMB.organizadora}" style="width:150px" requiredMessage="Valor é obrigatório" converter="simpleConverter">
@@ -34,7 +34,9 @@
                                 
                             </p:fieldset>
 
-                            <p:dataScroller value="#{questaoMB.questoesCriterio}" var="questao" chunkSize="10">
+                            <h:outputText value="#{questaoMB.info}"/>
+                            
+                            <p:dataScroller value="#{questaoMB.questoesCriterio}" var="questao" chunkSize="10" rows="10">
                                 <f:facet name="header">
                                     Questões
                                 </f:facet>
@@ -63,9 +65,13 @@
 
                                             <h:commandButton class="botao" value="Responder" action="#{questaoMB.verificaResposta(questao.id)}"/>
 
+                                            
                                         </h:panelGrid>
+                                        
+                    
                                     </p:outputPanel>
                                 </h:panelGrid>
+                                <p:separator />
                             </p:dataScroller>    
 
                         </h:form> 

@@ -40,10 +40,6 @@ public abstract class Servico<T> {
         entidade = entityManager.merge(entidade);
         entityManager.remove(entidade);
     }
-    
-    public void atualizar(T entidade){
-        entidade = entityManager.merge(entidade);
-    }
 
     @TransactionAttribute(SUPPORTS)
     protected List<T> getEntidades(String nomeQuery, Object[] parametros) {

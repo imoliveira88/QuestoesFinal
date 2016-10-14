@@ -8,17 +8,22 @@ package beans;
 import acesso.Cliente;
 import javax.annotation.PostConstruct;
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import org.primefaces.model.chart.PieChartModel;
+import servico.ClienteServico;
  
 @ManagedBean
 public class ChartView implements Serializable {
  
     private PieChartModel pieModel1;
+    
+    @EJB
+    ClienteServico clienteServico;
  
     @PostConstruct
     public void init() {
@@ -43,7 +48,9 @@ public class ChartView implements Serializable {
             Cliente cliente;
 
             HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
-            cliente = (Cliente) session.getAttribute("usuarioSessao");
+            cliente = (Cliente) session.getAttribute("usuarioDaSessao");
+            
+            cliente = clienteServico.retornaCliente(cliente.getLogin());
 
             pieModel1.set("Erros", cliente.getErradas());
             pieModel1.set("Acertos", cliente.getCorretas());

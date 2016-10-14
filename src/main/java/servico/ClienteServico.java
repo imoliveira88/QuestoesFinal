@@ -16,6 +16,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionManagement;
 import javax.persistence.TypedQuery;
+import modelo.Questao;
 
 @Stateless
 @LocalBean
@@ -34,11 +35,24 @@ public class ClienteServico extends Servico<Usuario> {
         else return false; //Já existe, portanto não salvou
     }
     
+    public void atualizar(Cliente cl){
+        Cliente cliente = entityManager.find(Cliente.class, retornaCliente(cl.getLogin()).getId());
+        cliente.setCorretas(cl.getCorretas());
+        cliente.setErradas(cl.getErradas());
+        entityManager.merge(cliente);
+    }
+    
+    public void adicionaQuestao(Cliente cl, Questao q){
+        Cliente cliente = entityManager.find(Cliente.class, retornaCliente(cl.getLogin()).getId());
+        cliente.addQuestao(q);
+        entityManager.merge(cliente);
+    }
+    
     public Cliente retornaCliente(String cliente){
-        TypedQuery<Cliente> query = entityManager.createNamedQuery("Usuario.USUARIO_POR_LOGIN", Cliente.class);
+        TypedQuery<Usuario> query = entityManager.createNamedQuery("Usuario.USUARIO_POR_LOGIN",Usuario.class);
         
         query.setParameter(1, cliente);
         
-       return query.getSingleResult();
+       return (Cliente) query.getSingleResult();
     }
 }
