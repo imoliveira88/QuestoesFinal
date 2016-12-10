@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import modelo.Organizadora;
@@ -15,7 +14,7 @@ import servico.OrganizadoraServico;
 
 @ManagedBean(name = "organizadoraMB")
 @RequestScoped
-public class OrganizadoraMB{
+public class OrganizadoraMB extends BeanGeral{
 
     private Organizadora organizadora;
     private List<Organizadora> organizadoras;
@@ -33,7 +32,7 @@ public class OrganizadoraMB{
     }
 
     public void setOrganizadora(Organizadora organizadora) {
-        this.organizadora = organizadora;
+        this.organizadora = new Organizadora(organizadora.getDescricao().toUpperCase());
     }
 
     public List<Organizadora> getOrganizadoras() {
@@ -46,42 +45,34 @@ public class OrganizadoraMB{
 
     public String salvar() throws ExcecaoNegocio,ParseException,EJBException {
         FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage msg;
         
         try{
             if(orgServico.salvar(organizadora)){
-                msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Cadastro feito com sucesso!");
-                context.addMessage("destinoAviso", msg);
+                this.addMensagem("Cadastro feito com sucesso!");
                 this.setOrganizadora(null);
             }else{
-                msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Já existe uma organizadora com o nome escolhido!");
-                context.addMessage("destinoAviso", msg);
+                this.addMensagem("Já existe uma organizadora com o mesmo nome!");
             }
             return "organizadora";
         }catch(Exception e){
-            msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Houve uma falha no cadastro! Atente para os formatos válidos dos campos e tente novamente!");
-            context.addMessage("destinoAviso", msg);
+            this.addMensagem("Houve uma falha! Tente novamente!");
             return "organizadora";
         }
-        
-        
-        
-        
+     
     }
     
     public String excluir() throws ParseException,ExcecaoNegocio,EJBException{
         FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage msg;
+
         try{
             orgServico.excluir(organizadora);
             this.organizadoras.remove(organizadora);
-            msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Organizadora excluída com sucesso!");
-            context.addMessage("destinoAviso", msg);
+            this.addMensagem("Organizadora excluída com sucesso!");
             this.setOrganizadora(null);
             return "organizadora";
         }catch(Exception e){
-            msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Houve uma falha na exclusão da organizadora. Provavelmente o registro está relacionado a outros persistidos no banco.");
-            context.addMessage("destinoAviso", msg);
+            this.addMensagem("Houve uma falha na exclusão da organizadora. Provavelmente o registro está relacionado a outros persistidos no banco.");
+
             return "organizadora";
         }
     }

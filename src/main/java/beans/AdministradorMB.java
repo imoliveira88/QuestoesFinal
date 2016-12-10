@@ -14,7 +14,7 @@ import servico.AdministradorServico;
 
 @ManagedBean(name = "cadastroMBF")
 @SessionScoped
-public class AdministradorMB{
+public class AdministradorMB extends BeanGeral{
     private String nome;
     private String login;
     private String senha;
@@ -54,20 +54,21 @@ public class AdministradorMB{
     
     public String cadastraFuncionario() throws EJBException, ParseException, ExcecaoNegocio{        
         FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage msg;
         
         try{
             Administrador adm = new Administrador(nome, login, senha);
-            admServico.salvar(adm);
-            nome = "";
-            login = "";
-            senha = "";
-            msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Cadastro feito com sucesso!");
-            context.addMessage("destinoAviso", msg);
-            return "funcionario";
+            if(admServico.salvar(adm)){
+                nome = "";
+                login = "";
+                senha = "";
+                this.addMensagem("Cadastro feito com sucesso!");
+                return "funcionario";
+            }else{
+                this.addMensagem("Já existe um usuário com o login escolhido! Tente outro!");
+                return "funcionario";
+            }
         }catch(Exception e){
-            msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Houve uma falha no cadastro! Atente para os formatos válidos dos campos e tente novamente!");
-            context.addMessage("destinoAviso", msg);
+            this.addMensagem("Houve uma falha no cadastro! Atente para os formatos válidos dos campos e tente novamente!");
             return "funcionario";
         }
         

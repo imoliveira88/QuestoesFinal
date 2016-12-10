@@ -52,6 +52,33 @@ public abstract class Servico<T> {
 
         return query.getResultList();
     }
+    
+    @TransactionAttribute(SUPPORTS)
+    public static boolean igualMaximaVerossimilhanca(String a, String b){
+        int soma = 0;
+        int tamanho = a.length();
+        double razao;
+        
+        if(tamanho <= 5 && b.length() <= 5) return a.equals(b);
+        
+        if(Math.abs(a.length()-b.length()) < 2){
+            for(int i=0; i< tamanho; i++){
+                System.out.println("a: " + a.charAt(i) + " b: " + b.charAt(i));
+                if(a.charAt(i) == b.charAt(i)){
+                    System.out.println("caraceres iguais");
+                    soma++;
+                }
+            }
+        }else return false; //diferença de tamanho de dois ou mais
+        
+        razao = (double) soma/tamanho;
+        
+        System.out.println("Soma: " + soma + "divisão " + soma/tamanho);
+        
+        System.out.println("tamanho de a: " + a.length() + "  tamanho de b: " + b.length() + " soma/tamanho = " + razao + " soma-tamanho = " + Math.abs(soma-tamanho));
+        
+        return (razao >= 0.8 && Math.abs(soma - tamanho) <= 2);
+    }
 
     @TransactionAttribute(SUPPORTS)
     protected T getEntidade(String nomeQuery, Object[] parametros) {
@@ -77,6 +104,23 @@ public abstract class Servico<T> {
         } catch (Exception e) {
                 return false;
             }
+        return false;
+    }
+    
+    @TransactionAttribute(SUPPORTS)
+    protected boolean checarExistenciaVerossimilhanca(String nomeQuery, String parametro) throws ExcecaoNegocio {
+        List<T> entidades;
+        
+        String maiusculo = parametro.toUpperCase();
+
+        try {
+            entidades = getEntidades(nomeQuery, new Object[]{parametro});
+            for(int i=0; i<entidades.size(); i++){
+                if(this.igualMaximaVerossimilhanca(maiusculo, entidades.get(i).toString())) return true;
+            }
+        } catch (Exception e) {
+                return false;
+        }
         return false;
     }
     

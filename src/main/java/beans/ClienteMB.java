@@ -6,8 +6,8 @@ import java.text.ParseException;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import modelo.Bandeira;
@@ -16,8 +16,8 @@ import servico.BandeiraServico;
 import servico.ClienteServico;
 
 @ManagedBean(name = "cadastroMB")
-@SessionScoped
-public class ClienteMB{
+@RequestScoped
+public class ClienteMB extends BeanGeral{
     private String bandeira;
     private String numeroCartao;
     private Date validade;
@@ -84,7 +84,6 @@ public class ClienteMB{
     
     public String cadastraCliente() throws ParseException, ExcecaoNegocio, EJBException{
         FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage msg;
         
         try{
             Bandeira band = bandeiraServico.retornaBandeira(bandeira);
@@ -93,18 +92,15 @@ public class ClienteMB{
             Cliente cliente = new Cliente(nome, login, senha, cartao);
 
             if(clienteServico.salvar(cliente)){
-                msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Cadastro feito com sucesso!");
-                context.addMessage("destinoAviso", msg);
+                this.addMensagem("Cadastro feito com sucesso!");
             }else{
-                msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Já existe um usuário com o login escolhido! Tente outro!");
-                context.addMessage("destinoAviso", msg);
+                this.addMensagem("Já existe um usuário com o login escolhido! Tente outro");
             }
             
             
             return "login";
         }catch(Exception e){
-            msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Houve um erro no cadastro! Atente para os formatos válidos dos campos e tente novamente!");
-            context.addMessage("destinoAviso", msg);
+            this.addMensagem("Houve um erro no cadastro! Atente para os formatos válidos dos campos e tente novamente!");
             
             return "cliente";
         }

@@ -25,8 +25,9 @@ import modelo.Disciplina;
 @TransactionManagement(CONTAINER)
 @TransactionAttribute(REQUIRED)
 public class DisciplinaServico extends Servico<Disciplina>{
+    
     public boolean salvar(Disciplina disciplina) throws ExcecaoNegocio {
-        if(!checarExistencia("Disciplina.DISCIPLINA_POR_NOME", disciplina.getDescricao())){
+        if(!checarExistenciaVerossimilhanca("Disciplina.TODAS", disciplina.getDescricao())){
             entityManager.persist(disciplina);
             return true;
         }
@@ -44,4 +45,5 @@ public class DisciplinaServico extends Servico<Disciplina>{
         
        return query.getSingleResult();
     }
+    
 }

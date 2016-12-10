@@ -25,6 +25,7 @@ import validacao.ValidaAno;
 @NamedQueries({
     @NamedQuery(name = "Questao.TODAS", query = "SELECT o FROM Questao o ORDER BY o.id"),
     @NamedQuery(name = "Questao.QUESTOES_POR_DISCIPLINA", query = "SELECT o FROM Questao o WHERE o.disciplina = ?1"),
+    @NamedQuery(name = "Questao.IDMAXIMO", query = "SELECT o FROM Questao o WHERE o.id = (select max(o.id) from Questao)"),
     @NamedQuery(name = "Questao.QUESTOES_POR_ORGANIZADORA", query = "SELECT o FROM Questao o WHERE o.organizadora = ?1"),
     @NamedQuery(name = "Questao.QUESTOES_POR_DISC_ORG", query = "SELECT o FROM Questao o WHERE o.disciplina = ?1 AND o.organizadora = ?2"),
     @NamedQuery(name = "Questao.QUESTAO_POR_ENUNCIADO", query = "SELECT o FROM Questao o WHERE o.enunciado1 = ?1"),
@@ -50,7 +51,7 @@ public class Questao implements Serializable, BaseEntity{
     @Column(name = "ENUNCIADO1")
     private String enunciado1;
     
-    @OneToMany(mappedBy = "questao", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Alternativa> alternativas;
     
     @NotNull
@@ -173,6 +174,11 @@ public class Questao implements Serializable, BaseEntity{
         }
         
         return 'A';
+    }
+    
+    @Override
+    public String toString(){
+        return this.id + "";
     }
 
     @Override

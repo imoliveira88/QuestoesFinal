@@ -20,7 +20,7 @@ import servico.DisciplinaServico;
 
 @ManagedBean(name = "disciplinaMB")
 @RequestScoped
-public class DisciplinaMB{
+public class DisciplinaMB extends BeanGeral{
 
     private String disciplina;
     private String descricao;
@@ -38,7 +38,7 @@ public class DisciplinaMB{
     }
 
     public void setDisciplina(String disciplina) {
-        this.disciplina = disciplina;
+        this.disciplina = disciplina.toUpperCase();
     }
 
     public List<Disciplina> getDisciplinas() {
@@ -56,46 +56,37 @@ public class DisciplinaMB{
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    
-    
 
     public String salvar() throws ParseException, ExcecaoNegocio, EJBException {
         FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage msg;
         
         try{
             
             if(discServico.salvar(new Disciplina(disciplina))){
-                msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Cadastro feito com sucesso!");
-                context.addMessage("destinoAviso", msg);
+                this.addMensagem("Cadastro feito com sucesso!");
                 this.setDisciplina("");
             }else{
-                msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Já existe uma disciplina com o nome escolhido!");
-                context.addMessage("destinoAviso", msg);
+                this.addMensagem("Já existe uma disciplina com o mesmo nome!");
             }
           
             return "disciplina";
         }catch(Exception e){
-            msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Houve uma falha no cadastro! Atente para os formatos válidos dos campos e tente novamente!");
-            context.addMessage("destinoAviso", msg);
+            this.addMensagem("Houve uma falha! Tente novamente!");
             return "disciplina";
         }
     }
     
     public String excluir() throws ExcecaoNegocio,EJBException{
         FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage msg;
         try{
             Disciplina disc = discServico.retornaDisciplina(disciplina);
             discServico.excluir(disc);
             this.disciplinas.remove(disc);
-            msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Disciplina excluída com sucesso!");
-            context.addMessage("destinoAviso", msg);
+            this.addMensagem("Disciplina excluída com sucesso!");
             this.setDisciplina("");
             return "disciplina";
         }catch(Exception e){
-            msg = new FacesMessage(FacesMessage.FACES_MESSAGES,"Houve um erro na exclusão! Provavelmente a disciplina está relacionada a alguma questão salva no banco!");
-            context.addMessage("destinoAviso", msg);
+            this.addMensagem("Houve um erro na exclusão! Provavelmente a disciplina está relacionada a alguma questão salva no banco!");
             return "disciplina";
         }
     }

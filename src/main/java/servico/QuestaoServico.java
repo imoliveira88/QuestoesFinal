@@ -53,6 +53,12 @@ public class QuestaoServico extends Servico<Questao> {
        return query.getSingleResult();
     }
     
+    public long retornaIdMaximo(){
+        TypedQuery<Questao> query = entityManager.createNamedQuery("Questao.IDMAXIMO", Questao.class);
+        
+       return ((Questao) query).getId();
+    }
+    
     public boolean salvar(Questao questao) throws ExcecaoNegocio {
         if(!checarExistencia(questao)){
             entityManager.persist(questao);

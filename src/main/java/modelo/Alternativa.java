@@ -10,7 +10,6 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,7 +43,7 @@ public class Alternativa implements Serializable, BaseEntity {
     @Column(name = "FIGURA")
     private Byte[] figura;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "ID_QUESTAO", referencedColumnName = "ID_QUESTAO")
     private Questao questao;
 

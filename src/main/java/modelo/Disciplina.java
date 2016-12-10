@@ -84,6 +84,4 @@ public class Disciplina implements Serializable, BaseEntity{
         return ((Disciplina) obj).getDescricao().equals(this.descricao);
     }
     
-    
-    
 }
