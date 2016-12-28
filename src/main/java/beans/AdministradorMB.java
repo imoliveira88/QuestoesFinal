@@ -18,6 +18,15 @@ public class AdministradorMB extends BeanGeral{
     private String nome;
     private String login;
     private String senha;
+    String skin = "geral.css";
+
+    public String getSkin() {
+        return skin;
+    }
+
+    public void setSkin(String skin) {
+        this.skin = skin;
+    }
     
     @EJB
     private AdministradorServico admServico;
@@ -56,7 +65,7 @@ public class AdministradorMB extends BeanGeral{
         FacesContext context = FacesContext.getCurrentInstance();
         
         try{
-            Administrador adm = new Administrador(nome, login, senha);
+            Administrador adm = new Administrador(nome, login, senha, skin);
             if(admServico.salvar(adm)){
                 nome = "";
                 login = "";

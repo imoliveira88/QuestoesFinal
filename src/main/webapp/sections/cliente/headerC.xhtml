@@ -8,12 +8,19 @@
    <head><title>IGNORED</title></head>
    <body>
       <ui:composition>
-        <h:graphicImage class="imglogo" library="images" name="MinhaMeta.png"/>                
+          <h:outputStylesheet library="css" name="#{loginBean2.usuarioSessao.skin}" />
+          <h:graphicImage class="imglogo" library="images" name="MinhaMeta.png"/>                
         <h2>
           Questões de Concursos Públicos 
         </h2>
         <div id="welcome">
-            <p class="welcome">Bem vindo: <h:outputText value="#{loginBean2.usuarioSessao.nome}" /></p>
+               <h:form>  
+                <p class="welcome">Bem vindo: <h:outputText value="#{loginBean2.usuarioSessao.nome}" />
+                <h:commandLink action="#{loginBean2.configurar}" > 
+                    <h:graphicImage library="images" name="config.png" class="flag" /> 
+                </h:commandLink>
+                </p>
+                </h:form>
         </div>
         
       </ui:composition>

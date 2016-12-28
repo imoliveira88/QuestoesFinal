@@ -55,4 +55,18 @@ public class ClienteServico extends Servico<Usuario> {
         
        return (Cliente) query.getSingleResult();
     }
+    
+    public Usuario retornaUsuario(String cliente){
+        TypedQuery<Usuario> query = entityManager.createNamedQuery("Usuario.USUARIO_POR_LOGIN",Usuario.class);
+        
+        query.setParameter(1, cliente);
+        
+       return query.getSingleResult();
+    }
+    
+    public void atualizarSkin(Usuario cl){
+        Usuario usuario = entityManager.find(Usuario.class, retornaUsuario(cl.getLogin()).getId());
+        usuario.setSkin(cl.getSkin());
+        entityManager.merge(usuario);
+    }
 }

@@ -18,6 +18,7 @@ import servico.UsuarioServico;
 public class UsuarioMB{
     private String nome;
     private String login;
+    private String skin;
     private String tipo;
     private List<Usuario> usuarios;
     
@@ -42,6 +43,14 @@ public class UsuarioMB{
 
     public void setLogin(String login) {
         this.login = login;
+    }
+    
+    public String getSkin() {
+        return skin;
+    }
+
+    public void setSkin(String skin) {
+        this.skin = skin;
     }
 
     public String getTipo() {

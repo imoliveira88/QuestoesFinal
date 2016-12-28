@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>MinhaMeta</title>
+        <h:outputStylesheet library="css" name="geral.css" />
+    </h:head>
+    <h:body>
+        <ui:decorate template="/templates/clienteDecorator.xhtml">
+         <h2>Escolha um configuração de cor para o seu perfil</h2>   
+                <div id="telas">
+                    <div id="telaLeft">
+                        <h:form>                
+                            <h:commandLink action="#{loginBean2.skinPadrao}" > 
+                                <h:graphicImage library="images" name="SkinPadrao.png" class="telaLeft" /> 
+                            </h:commandLink>
+                        </h:form>
+                    </div>
+                    <div id="telaRight">
+                        <h:form>
+                            <h:commandLink action="#{loginBean2.skinVerde}"> 
+                                <h:graphicImage library="images" name="SkinVerde.png" class="telaRight" /> 
+                            </h:commandLink>
+                        </h:form>
+                    </div>
+                </div>
+                
+                <div id="telas2">
+                    <div id="telaLeft">
+                        <h:form>                
+                            <h:commandLink action="#{loginBean2.skinVioleta}" > 
+                                <h:graphicImage library="images" name="SkinVioleta.png" class="telaLeft" /> 
+                            </h:commandLink>
+                        </h:form>
+                    </div>
+                    <div id="telaRight">
+                        <h:form>
+                            <h:commandLink action="#{loginBean2.skinPreto}"> 
+                                <h:graphicImage library="images" name="SkinPreto.png" class="telaRight" /> 
+                            </h:commandLink>
+                        </h:form>
+                    </div>
+                </div>
+            
+        </ui:decorate>
+    </h:body>
+</html>
+

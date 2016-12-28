@@ -18,10 +18,11 @@ import org.hibernate.validator.constraints.NotBlank;
 public abstract class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    public Usuario(String nome, String login, String senha){
+    public Usuario(String nome, String login, String senha, String skin){
         this.nome = nome;
         this.login = login;
         this.senha = senha;
+        this.skin = skin;
         this.grupos = new ArrayList<>();
     }
     
@@ -55,6 +56,10 @@ public abstract class Usuario implements Serializable {
     @Column(name = "LOGIN")
     private String login;
     
+    @Size(max = 20)
+    @Column(name="SKIN")
+    private String skin;
+        
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "TB_USUARIO_GRUPO")
     private List<Grupo> grupos;
@@ -81,6 +86,14 @@ public abstract class Usuario implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+    
+    public String getSkin() {
+        return skin;
+    }
+
+    public void setSkin(String skin) {
+        this.skin = skin;
     }
 
     public abstract String getTipo();

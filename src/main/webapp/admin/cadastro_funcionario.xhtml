@@ -22,13 +22,56 @@
                     <h:panelGrid columns="2" id = "basico"  cellpadding="5">
 
                         <p:outputLabel for="nome" value="Nome: " />
-                        <p:inputText id="nome" value="#{cadastroMBF.nome}" size="37" />
+                        <h:panelGroup>
+                            <p:inputText id="nome" value="#{cadastroMBF.nome}" size="37" required="true"
+                                         converter="upperCaseConverter" requiredMessage="#{msgs.notNull}"
+                                         validatorMessage="#{msgs.validaNome}">
+                                <f:validateLength minimum="3" maximum="40" />
+                                <f:ajax event="blur" render="m_nome nome" />
+                            </p:inputText>
+                            <h:message id="m_nome" class="invalid" for="nome"/>
+                        </h:panelGroup>
+
+
 
                         <p:outputLabel for="login" value="Login (e-mail): " />
-                        <p:inputText id="login" value="#{cadastroMBF.login}" size="37" />
-
+                        <h:panelGroup>
+                            <p:inputText id="login" value="#{cadastroMBF.login}" size="37"
+                                         required="true" requiredMessage="#{msgs.notNull}"
+                                         validatorMessage="#{msgs.validaEmail}">
+                                <f:validator validatorId="validadorEmail"/>
+                                <f:ajax event="blur" render="m_login login" />
+                            </p:inputText>
+                            <h:message id="m_login" class="invalid" for="login"/>
+                            <p:watermark for="login" value="nome@provedor.com" />
+                        </h:panelGroup>
+                                
                         <p:outputLabel for="senha" value="Senha: " />
-                        <p:password id="senha" value="#{cadastroMBF.senha}" size="10" maxlength="8" />
+                        <h:panelGroup>
+                            <p:password id="senha" value="#{cadastroMBF.senha}" size="10" maxlength="8" 
+                                        required="true" feedback="true" goodLabel="Boa" label="Senha"
+                                        weakLabel="Fraca" strongLabel="Forte" promptLabel="Informe a senha"
+                                        validatorMessage="#{msgs.validaSenha}" requiredMessage="#{msgs.notNull}"
+                                        binding="#{passwordComponent}">
+                                <f:validateLength minimum="6" maximum="20" />
+                                <f:ajax event="blur" render="m_senha" />                                
+                            </p:password>
+                            <h:message id="m_senha" class="invalid" for="senha"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel for="confirmesenha" value="#{msgs.cdtLabelCheckSenha}" />
+                        <h:panelGroup>
+                            <p:password id="confirmesenha" size="10" maxlength="8"
+                                        required="#{not empty passwordComponent.value}"
+                                        requiredMessage="#{msgs.notNull}" 
+                                        validatorMessage="#{msgs.notConfirm}">
+                                <f:validator validatorId="confirmPasswordValidator" />
+                                <f:attribute name="passwordComponent" value="#{passwordComponent}" />
+                                <f:ajax event="blur" execute="confirmesenha senha" render="m_confirme"/>
+                            </p:password>
+                            <h:message id="m_confirme" class="invalid" for="confirmesenha"/>
+                        </h:panelGroup>                                
+                        
                     </h:panelGrid>
                 <h:commandButton class="botao" value="Enviar" action="#{cadastroMBF.cadastraFuncionario}"/>
                 </p:fieldset>

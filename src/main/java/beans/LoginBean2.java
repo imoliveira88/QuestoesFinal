@@ -9,6 +9,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
+import servico.ClienteServico;
 import servico.UsuarioServico;
 
 @ManagedBean(name = "loginBean2")
@@ -22,6 +23,8 @@ public class LoginBean2 implements Serializable {
     
     @EJB
     UsuarioServico usuarioServico;
+    @EJB
+    ClienteServico clienteServico;
 
     public String login() throws ServletException,NullPointerException{
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -88,5 +91,30 @@ public class LoginBean2 implements Serializable {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+    
+    public String configurar() {
+        return "config";
+    }
+    
+    public void skinPadrao() {  
+	 Usuario user = getUsuarioSessao();
+         user.setSkin("geral.css");
+         clienteServico.atualizarSkin(user);
+    }  
+    public void skinVerde() {  
+	 Usuario user = getUsuarioSessao();
+         user.setSkin("verde.css");
+         clienteServico.atualizarSkin(user);
+    }  
+    public void skinVioleta() {  
+	 Usuario user = getUsuarioSessao();
+         user.setSkin("violeta.css");
+         clienteServico.atualizarSkin(user);
+    }  
+    public void skinPreto() {  
+	 Usuario user = getUsuarioSessao();
+         user.setSkin("preto.css");
+         clienteServico.atualizarSkin(user);
+    }  
 
 }

@@ -14,8 +14,8 @@ import javax.validation.constraints.Size;
 public class Cliente extends Usuario {
     private static final long serialVersionUID = 1L;
     
-    public Cliente(String nome, String login, String senha, Cartao cartao){
-        super(nome,login,senha); 
+    public Cliente(String nome, String login, String senha, String skin, Cartao cartao){
+        super(nome,login,senha,skin); 
         this.questoes = new ArrayList<>();  
         this.cartao = cartao;
     }
@@ -38,10 +38,6 @@ public class Cliente extends Usuario {
     
     @Column(name="ERRADAS")
     private int erradas;
-    
-    @Size(max = 20)
-    @Column(name="SKIN")
-    private String skin;
     
     public Cartao getCartao() {
         return cartao;

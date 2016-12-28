@@ -8,7 +8,6 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import modelo.Bandeira;
 import modelo.Cartao;
@@ -24,6 +23,15 @@ public class ClienteMB extends BeanGeral{
     private String nome;
     private String login;
     private String senha;
+    String skin = "geral.css";
+
+    public String getSkin() {
+        return skin;
+    }
+
+    public void setSkin(String skin) {
+        this.skin = skin;
+    }
     
     @EJB
     private ClienteServico clienteServico;
@@ -89,7 +97,7 @@ public class ClienteMB extends BeanGeral{
             Bandeira band = bandeiraServico.retornaBandeira(bandeira);
 
             Cartao cartao = new Cartao(band, numeroCartao, validade);
-            Cliente cliente = new Cliente(nome, login, senha, cartao);
+            Cliente cliente = new Cliente(nome, login, senha, skin, cartao);
 
             if(clienteServico.salvar(cliente)){
                 this.addMensagem("Cadastro feito com sucesso!");

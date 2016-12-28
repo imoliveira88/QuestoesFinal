@@ -9,8 +9,8 @@ import javax.persistence.*;
 public class Administrador extends Usuario {
     private static final long serialVersionUID = 1L;
     
-    public Administrador(String nome, String login, String senha){
-        super(nome,login,senha); 
+    public Administrador(String nome, String login, String senha, String skin){
+        super(nome,login,senha,skin); 
     }
     
     public Administrador(){};

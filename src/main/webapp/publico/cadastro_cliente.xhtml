@@ -35,7 +35,16 @@
                                 
 
                                 <p:outputLabel for="login" value="Login (e-mail): " />
-                                <p:inputText id="login" value="#{cadastroMB.login}" size="37" />
+                                <h:panelGroup>
+                                <p:inputText id="login" value="#{cadastroMB.login}" size="37"
+                                             required="true" requiredMessage="#{msgs.notNull}"
+                                             validatorMessage="#{msgs.validaEmail}">
+                                    <f:validator validatorId="validadorEmail"/>
+                                    <f:ajax event="blur" render="m_login login" />
+                                </p:inputText>
+                                    <h:message id="m_login" class="invalid" for="login"/>
+                                    <p:watermark for="login" value="nome@provedor.com" />
+                                </h:panelGroup>
 
                                 
                                 <p:outputLabel for="senha" value="Senha: " />
@@ -46,7 +55,7 @@
                                             validatorMessage="#{msgs.validaSenha}" requiredMessage="#{msgs.notNull}"
                                             binding="#{passwordComponent}">
                                     <f:validateLength minimum="6" maximum="20" />
-                                    <f:ajax event="blur" render="m_senha"/>                                
+                                    <f:ajax event="blur" render="m_senha" />                                
                                 </p:password>
                                     <h:message id="m_senha" class="invalid" for="senha"/>
                                 </h:panelGroup>
@@ -55,7 +64,8 @@
                                 <h:panelGroup>
                                    <p:password id="confirmesenha" size="10" maxlength="8"
                                                required="#{not empty passwordComponent.value}"
-                                               requiredMessage="#{msgs.notNull}" >
+                                               requiredMessage="#{msgs.notNull}" 
+                                               validatorMessage="#{msgs.notConfirm}">
                                        <f:validator validatorId="confirmPasswordValidator" />
                                        <f:attribute name="passwordComponent" value="#{passwordComponent}" />
                                        <f:ajax event="blur" execute="confirmesenha senha" render="m_confirme"/>
@@ -76,11 +86,24 @@
                                 <f:attribute name="escolha" value="#{band}" />
 
                                 <p:outputLabel value="Número do cartão" for="numeroCartao"/>
-                                <p:inputText id="numeroCartao" value="#{cadastroMB.numeroCartao}" size="16" />
-
-                                <p:outputLabel value="Validade" for="data"/>
-                                <p:calendar id="data" value="#{cadastroMB.validade}" />
+                                <h:panelGroup>
+                                <p:inputText id="numeroCartao" value="#{cadastroMB.numeroCartao}" size="16" 
+                                             required="true" requiredMessage="#{msgs.notNull}">
+                                    <f:ajax event="blur" render="m_numero" />
+                                </p:inputText>
+                                    <h:message id="m_numero" class="invalid" for="numeroCartao"/>
+                                </h:panelGroup>
                                 
+                                <p:outputLabel value="Validade" for="data"/>
+                                <h:panelGroup>
+                                <p:calendar id="data" value="#{cadastroMB.validade}" 
+                                            required="true" requiredMessage="#{msgs.notNull}">
+                                    <f:ajax event="blur" render="m_data" />
+                                </p:calendar>
+                                    <h:message id="m_data" class="invalid" for="data"/>
+                                </h:panelGroup>
+                                
+                                <h:inputHidden value="#{cadastroMB.skin}" id="hiddenId" />
                                 <h:commandButton class="botao" value="Enviar" action="#{cadastroMB.cadastraCliente}"/>
                             </h:panelGrid>
                         </p:fieldset>
