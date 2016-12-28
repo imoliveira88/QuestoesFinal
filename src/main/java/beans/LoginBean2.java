@@ -29,7 +29,9 @@ public class LoginBean2 implements Serializable {
     public String login() throws ServletException,NullPointerException{
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        Recaptcha recaptcha = new Recaptcha(fc);
         try {
+            if (recaptcha.validar()) {
             if (valida(login, senha)) {
                 usuarioSessao = usuarioServico.retornaUsuario(login);
                 session.setAttribute("usuarioDaSessao", usuarioSessao);
@@ -45,6 +47,13 @@ public class LoginBean2 implements Serializable {
                 adicionarMensagem("Usuário ou senha inválidos!");
                 return "login";
             }
+            }else{
+                setLogin(null);
+                setUsuarioSessao(null);
+                session.setAttribute("usuarioDaSessao", usuarioSessao);
+                adicionarMensagem("Captcha inválido!");
+                return "login";    
+            }
         } catch (Exception e) {
             setLogin(null);
             setUsuarioSessao(null);
@@ -52,8 +61,10 @@ public class LoginBean2 implements Serializable {
             adicionarMensagem("Senha ou usuário inválidos!");
             return "login";
         }
-
     }
+    
+
+    
     
     private boolean valida(String login, String senha){
         Usuario usu = usuarioServico.retornaUsuario(login);

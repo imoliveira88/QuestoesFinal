@@ -19,7 +19,7 @@
                     <h:form id="loginForm">
                         <p:fieldset legend="Login" style="margin-bottom:20px">
                             <p:growl for="destinoAviso" id="growl" autoUpdate="true" showDetail="true"/>
-                            <h:panelGrid columns="2" cellpadding="5">
+                            <h:panelGrid id="panel" columns="2" cellpadding="5">
 
                                 <h:outputText value="Login (e-mail): " />
                                 <h:panelGroup>
@@ -39,7 +39,12 @@
                                 </h:inputSecret>
                                     <h:message id="m_senha" class="invalid" for="senha"/>
                                 </h:panelGroup>
-                                <h:commandButton value="Login" action="#{loginBean2.login()}" class="botao" />
+                                <h:outputLabel value="Captcha: " />
+                                <div class="g-recaptcha" data-sitekey="#{facesContext.externalContext.getInitParameter('PUBLIC_CAPTCHA_KEY')}"/>
+                    
+                                <p:commandButton value="Login" action="#{loginBean2.login()}" class="botao" 
+                                                 ajax="false" update="growl, panel" 
+                                                 icon="ui-icon-play" validateClient="true"/>
 
                                 <f:facet name="footer">
                                     <a href='cadastro_cliente.xhtml' class="cmdLink2">Não tem cadastro? Clique aqui!</a>

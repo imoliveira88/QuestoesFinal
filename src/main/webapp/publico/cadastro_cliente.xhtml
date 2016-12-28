@@ -8,6 +8,7 @@
     <h:head>
         <title>MinhaMeta</title>
         <h:outputStylesheet library="css" name="geral.css" />
+        <script src='https://www.google.com/recaptcha/api.js' />
     </h:head>
     <h:body>
         <ui:decorate template="/templates/masterDecorator.xhtml">
@@ -102,9 +103,13 @@
                                 </p:calendar>
                                     <h:message id="m_data" class="invalid" for="data"/>
                                 </h:panelGroup>
+                                <h:outputLabel value="Captcha: " />
+                                <div class="g-recaptcha" data-sitekey="#{facesContext.externalContext.getInitParameter('PUBLIC_CAPTCHA_KEY')}"/>
                                 
                                 <h:inputHidden value="#{cadastroMB.skin}" id="hiddenId" />
-                                <h:commandButton class="botao" value="Enviar" action="#{cadastroMB.cadastraCliente}"/>
+                                <p:commandButton class="botao" value="Enviar" action="#{cadastroMB.cadastraCliente}"
+                                                 ajax="false" update="msgs, basico, cartao" 
+                                                 icon="ui-icon-person" validateClient="true"/>
                             </h:panelGrid>
                         </p:fieldset>
 
