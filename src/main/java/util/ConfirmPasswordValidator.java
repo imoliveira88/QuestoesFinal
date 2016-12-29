@@ -21,11 +21,11 @@ public class ConfirmPasswordValidator implements Validator {
   
         String confirm = (String) value;
         
-        ResourceBundle bundle = ResourceBundle.getBundle("extras.messages");
-        String alerta = bundle.getString("notConfirm");
+       //ResourceBundle bundle = ResourceBundle.getBundle("extras.messages");
+        //String alerta = bundle.getString("notConfirm");
         
         if (!password.equals(confirm)) {
-            throw new ValidatorException(new FacesMessage(alerta));
+            //throw new ValidatorException(new FacesMessage(alerta));
         }
     }
 }

@@ -39,12 +39,12 @@
                                 </h:inputSecret>
                                     <h:message id="m_senha" class="invalid" for="senha"/>
                                 </h:panelGroup>
+                                
                                 <h:outputLabel value="Captcha: " />
                                 <div class="g-recaptcha" data-sitekey="#{facesContext.externalContext.getInitParameter('PUBLIC_CAPTCHA_KEY')}"/>
                     
-                                <p:commandButton value="Login" action="#{loginBean2.login()}" class="botao" 
-                                                 ajax="false" update="growl, panel" 
-                                                 icon="ui-icon-play" validateClient="true"/>
+                                <p:commandButton value="Login" action="#{loginBean2.login()}" styleClass="botao"
+                                                 ajax="false" update="growl, panel" icon="ui-icon-play" validateClient="true"/>
 
                                 <f:facet name="footer">
                                     <a href='cadastro_cliente.xhtml' class="cmdLink2">Não tem cadastro? Clique aqui!</a>

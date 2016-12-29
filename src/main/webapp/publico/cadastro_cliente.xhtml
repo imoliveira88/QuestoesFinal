@@ -107,7 +107,7 @@
                                 <div class="g-recaptcha" data-sitekey="#{facesContext.externalContext.getInitParameter('PUBLIC_CAPTCHA_KEY')}"/>
                                 
                                 <h:inputHidden value="#{cadastroMB.skin}" id="hiddenId" />
-                                <p:commandButton class="botao" value="Enviar" action="#{cadastroMB.cadastraCliente}"
+                                <p:commandButton styleClass="botao" value="Enviar" action="#{cadastroMB.cadastraCliente}"
                                                  ajax="false" update="msgs, basico, cartao" 
                                                  icon="ui-icon-person" validateClient="true"/>
                             </h:panelGrid>

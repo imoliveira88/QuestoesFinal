@@ -24,17 +24,9 @@ import javax.persistence.TypedQuery;
  */
 public abstract class Servico<T> {
 
-    @PersistenceContext(name = "QuestoesPU", type = TRANSACTION)
+    @PersistenceContext(name = "QuestoesUP", type = TRANSACTION)
     protected EntityManager entityManager;
     protected Class<T> classe;
-
-    @TransactionAttribute(SUPPORTS)
-    public List<T> getEntidades(String nomeQuery) {
-        List<T> resultado = new ArrayList<>();
-        TypedQuery<T> query = entityManager.createNamedQuery(nomeQuery, classe);
-        resultado = query.getResultList();
-        return resultado;
-    }
     
     public void excluir(T entidade){
         entidade = entityManager.merge(entidade);
@@ -42,13 +34,8 @@ public abstract class Servico<T> {
     }
 
     @TransactionAttribute(SUPPORTS)
-    protected List<T> getEntidades(String nomeQuery, Object[] parametros) {
+    protected List<T> getEntidades(String nomeQuery) {
         TypedQuery<T> query = entityManager.createNamedQuery(nomeQuery, classe);
-
-        int i = 1;
-        for (Object parametro : parametros) {
-            query.setParameter(i++, parametro);
-        }
 
         return query.getResultList();
     }
@@ -68,6 +55,7 @@ public abstract class Servico<T> {
                     System.out.println("caraceres iguais");
                     soma++;
                 }
+                else System.out.println("caracteres diferentes!");
             }
         }else return false; //diferença de tamanho de dois ou mais
         
@@ -108,30 +96,23 @@ public abstract class Servico<T> {
     }
     
     @TransactionAttribute(SUPPORTS)
-    protected boolean checarExistenciaVerossimilhanca(String nomeQuery, String parametro) throws ExcecaoNegocio {
+    public boolean checarExistenciaVerossimilhanca(String nomeQuery, String parametro) throws ExcecaoNegocio {
         List<T> entidades;
         
         String maiusculo = parametro.toUpperCase();
 
         try {
-            entidades = getEntidades(nomeQuery, new Object[]{parametro});
+            entidades = getEntidades(nomeQuery);
             for(int i=0; i<entidades.size(); i++){
-                if(this.igualMaximaVerossimilhanca(maiusculo, entidades.get(i).toString())) return true;
+                System.out.println("Disciplina: " + maiusculo + " atual: " + entidades.get(i).toString());
+                if(Servico.igualMaximaVerossimilhanca(maiusculo, entidades.get(i).toString())) return true;
             }
         } catch (Exception e) {
+            System.out.println("Teve um erro massa por aqui! ");
+            e.printStackTrace();
                 return false;
         }
         return false;
-    }
-    
-    @TransactionAttribute(SUPPORTS)
-    protected void checarNaoExistencia(String nomeQuery, Object[] parametros)
-            throws ExcecaoNegocio {
-        try {
-            getEntidade(nomeQuery, parametros);
-        } catch (NoResultException ex) {
-            throw new ExcecaoNegocio(ExcecaoNegocio.OBJETO_INEXISTENTE);
-        }
     }
     
 }

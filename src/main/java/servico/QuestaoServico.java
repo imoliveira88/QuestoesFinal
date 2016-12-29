@@ -72,10 +72,21 @@ public class QuestaoServico extends Servico<Questao> {
     }
 
     public List<Questao> questoesCriterio(Disciplina disciplina, Organizadora organizadora) {
-        TypedQuery<Questao> query = entityManager.createNamedQuery("Questao.QUESTOES_POR_DISC_ORG", Questao.class);
-
-        query.setParameter(1, disciplina);
-        query.setParameter(2, organizadora);
+        TypedQuery<Questao> query;
+        
+        if(disciplina.getId() == 0 && organizadora.getId() == 0){
+            query = entityManager.createNamedQuery("Questao.TODAS", Questao.class);
+        }else if(disciplina.getId() != 0){
+            query = entityManager.createNamedQuery("Questao.QUESTOES_POR_DISCIPLINA", Questao.class);
+            query.setParameter(1, disciplina);
+        }else if(organizadora.getId() != 0){
+            query = entityManager.createNamedQuery("Questao.QUESTOES_POR_ORGANIZADORA", Questao.class);
+            query.setParameter(1, organizadora);
+        }else{
+            query = entityManager.createNamedQuery("Questao.QUESTOES_POR_DISC_ORG", Questao.class);
+            query.setParameter(1, disciplina);
+            query.setParameter(2, organizadora);
+        }
         
         return query.getResultList();
     }

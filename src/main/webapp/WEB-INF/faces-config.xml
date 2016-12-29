@@ -104,6 +104,7 @@
         <navigation-case>
             <from-outcome>config</from-outcome>
             <to-view-id>/cliente/config.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>        
     </navigation-rule>        
 

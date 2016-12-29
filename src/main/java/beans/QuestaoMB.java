@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans;
 
 import acesso.Cliente;
@@ -13,8 +8,9 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.persistence.NoResultException;
 import javax.servlet.http.HttpSession;
 import modelo.Disciplina;
 import modelo.Organizadora;
@@ -24,12 +20,8 @@ import servico.DisciplinaServico;
 import servico.OrganizadoraServico;
 import servico.QuestaoServico;
 
-/**
- *
- * @author Administrador
- */
 @ManagedBean(name = "questaoMB")
-@RequestScoped
+@SessionScoped
 public class QuestaoMB extends BeanGeral{
     private Questao questao;
     private Cliente cliente;
@@ -37,10 +29,9 @@ public class QuestaoMB extends BeanGeral{
     private List<Questao> questoes;
     private String organizadora;
     private List<Organizadora> organizadoras;
-    private String categoria;
+    private char alt_escolhida;
     private String disciplina;
     private List<Disciplina> disciplinas;
-    private boolean nada;
     private int ano;
     private char correta;
     private String alternativaA;
@@ -48,8 +39,8 @@ public class QuestaoMB extends BeanGeral{
     private String alternativaC;
     private String alternativaD;
     private String alternativaE;
-    private String alt_escolhida;
-    private String info;
+    
+    private int atual;
     
     @EJB
     QuestaoServico questaoServico;
@@ -64,11 +55,11 @@ public class QuestaoMB extends BeanGeral{
     DisciplinaServico disciplinaServico;
     
     public QuestaoMB(){
-        alt_escolhida = "";
         questoes = new ArrayList<>();
         organizadoras = new ArrayList<>();
         disciplinas = new ArrayList<>();
         questao = new Questao();
+        atual = 0;
     }
 
     public Questao getQuestao() {
@@ -77,22 +68,6 @@ public class QuestaoMB extends BeanGeral{
 
     public void setQuestao(Questao questao) {
         this.questao = questao;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-    
-    public boolean isNada() {
-        return nada;
-    }
-
-    public void setNada(boolean nada) {
-        this.nada = nada;
     }
 
     public int getAno() {
@@ -111,10 +86,18 @@ public class QuestaoMB extends BeanGeral{
         this.correta = correta;
     }
 
+    public char getAlt_escolhida() {
+        return alt_escolhida;
+    }
+
+    public void setAlt_escolhida(char alt_escolhida) {
+        this.alt_escolhida = alt_escolhida;
+    }
+   
     public Cliente getCliente() {
         return cliente;
     }
-
+    
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
@@ -135,14 +118,6 @@ public class QuestaoMB extends BeanGeral{
         this.organizadora = organizadora;
     }
 
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
     public String getDisciplina() {
         return disciplina;
     }
@@ -160,32 +135,53 @@ public class QuestaoMB extends BeanGeral{
     }
 
     public List<Organizadora> getOrganizadoras() {
-        return organizadoraServico.todasOrganizadoras();
+        List<Organizadora> orgs = new ArrayList<>();
+        Organizadora org = new Organizadora();
+        org.setId((long)0);
+        orgs.add(org);
+        orgs.addAll(organizadoraServico.todasOrganizadoras());
+        return orgs;
     }
 
     public void setOrganizadoras(List<Organizadora> organizadoras) {
         this.organizadoras = organizadoras;
     }
-
-    public char alt_escolhida(int i) {
-        return alt_escolhida.charAt(i);
-    }
-
-    public void setAlt_escolhida(char alt_escolhida, int i) {
-        for(int j=0; j<=i; j++){
-            if(j != i) this.alt_escolhida += 'f';
-            else this.alt_escolhida += alt_escolhida;
-        }
-    }
     
-    public List<Questao> getQuestoesCriterio(){
-        return this.getQuestoes();
-        //if(disciplina == null || organizadora == null || nada == true) return this.getQuestoes();
-        //return questaoServico.questoesCriterio(disciplinaServico.retornaDisciplina(disciplina),organizadoraServico.retornaOrganizadora(organizadora));
+    //Retorna uma questão aleatória... a ser implementado os filtros
+    public List<Questao> getQuestoesCriterio() throws NoResultException, EJBException{
+        List<Questao> todasQuestoes;
+        List<Questao> selecao = new ArrayList<>();
+        
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        
+        try {
+            
+            //EXIBIÇÃO DAS QUESTÕES NA ORDEM DOS IDS
+            
+            todasQuestoes = questaoServico.questoesCriterio(disciplinaServico.retornaDisciplina((String) session.getAttribute("disciplinaSessao")), organizadoraServico.retornaOrganizadora((String) session.getAttribute("organizadoraSessao")));
+            
+            /*int tamanho = todasQuestoes.size();
+            
+            int aleatorio = (int) Math.floor(tamanho * Math.random());*/
+            
+            selecao.add(todasQuestoes.get(atual));
+            
+            return selecao;
+        } catch (Exception e) {
+            //this.addMensagem("Não há questões que satisfaçam este critério!");
+            return null;
+        }
+        
     }
     
     public List<Disciplina> getDisciplinas(){
-        return disciplinaServico.todasDisciplinas();
+        List<Disciplina> disc = new ArrayList<>();
+        Disciplina di = new Disciplina();
+        di.setId((long)0);
+        disc.add(di);
+        disc.addAll(disciplinaServico.todasDisciplinas());
+        return disc;
     }
 
     public void setDisciplinas(List<Disciplina> disciplinas) {
@@ -211,6 +207,7 @@ public class QuestaoMB extends BeanGeral{
     public void inicializar(){
         this.questao = null;
         this.correta = '\0';
+        this.alt_escolhida = '\0';
     }
 
     public String getAlternativaC() {
@@ -288,6 +285,13 @@ public class QuestaoMB extends BeanGeral{
     }
     
     public String filtrar(){
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("disciplinaSessao", disciplina);
+        session.setAttribute("organizadoraSessao", organizadora);
+        
+        atual = 0;
+        
         return "questaoUsu";
     }
     
@@ -300,30 +304,49 @@ public class QuestaoMB extends BeanGeral{
             
             cl.setLogin(cliente.getLogin());
             questao = questaoServico.retornaQuestao(id);
-                        
-            if (alt_escolhida.charAt((int)id) == '\0'){
+                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+            if (alt_escolhida == '\0'){
                 this.addMensagem("Escolha uma alternativa!");
                 return "questaoUsu";
             }
             
-            if (alt_escolhida.charAt((int)id) == questao.getCorreta()) {
+            if (alt_escolhida == questao.getCorreta()) {
                 this.addMensagem("Você acertou!");
                 cl.setCorretas(cliente.getCorretas() + 1);
                 cl.setErradas(cliente.getErradas());
-                
+                clienteServico.atualizar(cl);
             } else {
                 this.addMensagem("Você errou!");
                 cl.setErradas(cliente.getErradas() + 1);
                 cl.setCorretas(cliente.getCorretas());
+                clienteServico.atualizar(cl);
             }
-            info = "Id da questão: " + id + "  Alternativa correta da questão: " + questao.getCorreta() + "Alternativa marcada: " + this.alt_escolhida;
-            clienteServico.atualizar(cl);
+            
+            atual++;
+            
             inicializar();
             return "questaoUsu";
+            
         }catch(Exception e){
             this.addMensagem("Algo deu errado... tente novamente!");
             inicializar();
             return "questaoUsu";
         }
-    } 
+    }
+    
+    public String proxima() throws EJBException{
+        try{
+            
+            inicializar();
+            
+            atual++;
+            
+            return "questaoUsu";
+            
+        }catch(Exception e){
+            this.addMensagem("Algo deu errado... tente novamente!");
+            inicializar();
+            return "questaoUsu";
+        }
+    }
 }

@@ -19,31 +19,28 @@
                     <td>
                         <h:form>
                             <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true"/>
-                            <p:fieldset legend="Filtrar Questões por:" style="margin-bottom:10px">
+                            <p:fieldset id="filtroField" legend="Filtrar Questões por:" style="margin-bottom:10px">
                                 <p:outputLabel for="organizadora" value="Organizadora: " />
                                 <h:selectOneMenu id="organizadora" value="#{questaoMB.organizadora}" style="width:150px" requiredMessage="Valor é obrigatório" converter="simpleConverter">
                                     <f:selectItems value="#{questaoMB.organizadoras}" var="organizadora" itemValue="#{organizadora}"/>
                                 </h:selectOneMenu>
-                                <f:attribute name="escolha" value="#{organizadora.descricao}" />
+                                <f:attribute id="escolhaO" name="escolha" value="#{organizadora.descricao}" />
 
                                 <p:outputLabel for="disciplina" value="Disciplina " />
                                 <h:selectOneMenu id="disciplina" value="#{questaoMB.disciplina}" style="width:250px" requiredMessage="Valor é obrigatório" converter="simpleConverter">
                                     <f:selectItems value="#{questaoMB.disciplinas}" var="disciplina" itemValue="#{disciplina}"/>
                                 </h:selectOneMenu>
-                                <f:attribute name="escolha" value="#{disciplina.descricao}" />
+                                <f:attribute id="escolhaD" name="escolha" value="#{disciplina.descricao}" />
+                                
+                                <h:commandButton class="botao" value="Filtrar" action="#{questaoMB.filtrar()}"/>
                                 
                             </p:fieldset>
-
-                            <h:outputText value="#{questaoMB.info}"/>
                             
-                            <p:dataScroller value="#{questaoMB.questoesCriterio}" var="questao" chunkSize="10" rows="10">
+                            <p:dataScroller value="#{questaoMB.questoesCriterio}" var="questao" chunkSize="1" rows="1" mode="inline">
                                 <f:facet name="header">
                                     Questões
                                 </f:facet>
 
-                                <h:panelGrid columns="1" style="width:100%">
-
-                                    <p:outputPanel>
                                         <h:panelGrid columns="2" cellpadding="5">
                                             
                                             <h:outputText value="Organizadora:" />
@@ -59,18 +56,15 @@
                                             <h:outputText value="#{questao.enunciado1}" style="font-weight: bold"/>
 
                                             <p:outputLabel for="escolha" value="Alternativa:" />
-                                            <p:selectOneRadio id="escolha" value="#{questaoMB.setAlt_escolhida(questao.id)}"  layout="grid" columns="1">
+                                            <p:selectOneRadio id="escolha" value="#{questaoMB.alt_escolhida}" layout="grid" columns="1">
                                                 <f:selectItems value="#{questao.alternativas}" var="alternativa" itemLabel="#{alternativa}" itemValue="#{questao.retornaLetra(alternativa)}"/>
                                             </p:selectOneRadio>
 
                                             <h:commandButton class="botao" value="Responder" action="#{questaoMB.verificaResposta(questao.id)}"/>
-
+                                            <h:commandButton class="botao" value="Próxima" action="#{questaoMB.proxima()}"/>
                                             
                                         </h:panelGrid>
                                         
-                    
-                                    </p:outputPanel>
-                                </h:panelGrid>
                                 <p:separator />
                             </p:dataScroller>    
 

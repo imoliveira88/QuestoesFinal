@@ -63,7 +63,7 @@ public class Questao implements Serializable, BaseEntity{
     private int ano;
     
     @NotNull
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_ORGANIZADORA", referencedColumnName = "ID_ORGANIZADORA")
     private Organizadora organizadora;
     
