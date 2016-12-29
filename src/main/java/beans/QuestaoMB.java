@@ -34,6 +34,7 @@ public class QuestaoMB extends BeanGeral{
     private List<Disciplina> disciplinas;
     private int ano;
     private char correta;
+    private int tamanho;
     private String alternativaA;
     private String alternativaB;
     private String alternativaC;
@@ -147,8 +148,7 @@ public class QuestaoMB extends BeanGeral{
         this.organizadoras = organizadoras;
     }
     
-    //Retorna uma questão aleatória... a ser implementado os filtros
-    public List<Questao> getQuestoesCriterio() throws NoResultException, EJBException{
+    public Questao getQuestoesCriterio() throws NoResultException, EJBException{
         List<Questao> todasQuestoes;
         List<Questao> selecao = new ArrayList<>();
         
@@ -156,18 +156,12 @@ public class QuestaoMB extends BeanGeral{
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         
         try {
-            
-            //EXIBIÇÃO DAS QUESTÕES NA ORDEM DOS IDS
-            
+                        
             todasQuestoes = questaoServico.questoesCriterio(disciplinaServico.retornaDisciplina((String) session.getAttribute("disciplinaSessao")), organizadoraServico.retornaOrganizadora((String) session.getAttribute("organizadoraSessao")));
             
-            /*int tamanho = todasQuestoes.size();
+            tamanho = todasQuestoes.size();
             
-            int aleatorio = (int) Math.floor(tamanho * Math.random());*/
-            
-            selecao.add(todasQuestoes.get(atual));
-            
-            return selecao;
+            return todasQuestoes.get(atual);
         } catch (Exception e) {
             //this.addMensagem("Não há questões que satisfaçam este critério!");
             return null;
@@ -302,6 +296,11 @@ public class QuestaoMB extends BeanGeral{
             HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
             cliente = (Cliente) session.getAttribute("usuarioDaSessao");
             
+            int erros = cliente.getErradas();
+            int acertos = cliente.getCorretas();
+            
+            this.addMensagem("Erros: " + erros + " Acertos" + acertos);
+            
             cl.setLogin(cliente.getLogin());
             questao = questaoServico.retornaQuestao(id);
                                                                                                                                                                                                                                                                                                                                                                                                                                                           
@@ -312,17 +311,17 @@ public class QuestaoMB extends BeanGeral{
             
             if (alt_escolhida == questao.getCorreta()) {
                 this.addMensagem("Você acertou!");
-                cl.setCorretas(cliente.getCorretas() + 1);
-                cl.setErradas(cliente.getErradas());
+                cl.setErradas(erros);
+                cl.setCorretas(acertos+1);
                 clienteServico.atualizar(cl);
             } else {
                 this.addMensagem("Você errou!");
-                cl.setErradas(cliente.getErradas() + 1);
-                cl.setCorretas(cliente.getCorretas());
+                cl.setErradas(erros+1);
+                cl.setCorretas(acertos);
                 clienteServico.atualizar(cl);
             }
             
-            atual++;
+            atual = (atual+1)%tamanho;
             
             inicializar();
             return "questaoUsu";
@@ -339,7 +338,7 @@ public class QuestaoMB extends BeanGeral{
             
             inicializar();
             
-            atual++;
+            atual = (atual + 1)%tamanho;
             
             return "questaoUsu";
             
