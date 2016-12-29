@@ -46,12 +46,15 @@ public abstract class Servico<T> {
         int tamanho = a.length();
         double razao;
         
+        String a1 = a.toUpperCase();
+        String b1 = b.toUpperCase();
+        
         if(tamanho <= 5 && b.length() <= 5) return a.equals(b);
         
         if(Math.abs(a.length()-b.length()) < 2){
             for(int i=0; i< tamanho; i++){
-                System.out.println("a: " + a.charAt(i) + " b: " + b.charAt(i));
-                if(a.charAt(i) == b.charAt(i)){
+                System.out.println("a: " + a1.charAt(i) + " b: " + b1.charAt(i));
+                if(a1.charAt(i) == b1.charAt(i)){
                     System.out.println("caraceres iguais");
                     soma++;
                 }

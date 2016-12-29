@@ -5,6 +5,7 @@
  */
 package main;
 
+import acesso.Cliente;
 import excecao.ExcecaoNegocio;
 import servico.DisciplinaServico;
 import servico.Servico;
@@ -16,12 +17,13 @@ import servico.Servico;
 public class Main {
     
     public static void main(String[] args) throws ExcecaoNegocio{
-        DisciplinaServico disc = new DisciplinaServico();
+        Cliente cl = new Cliente();
+        cl.setLogin("celso@hotmail.com");
         
         //if(Servico.igualMaximaVerossimilhanca("HISTORIA DO BRASIL", "HISTORIA DO BRASKH")) System.out.println("igual");
         //else System.out.println("diferente");
         
-        if(disc.checarExistenciaVerossimilhanca("raciocinio logire")) System.out.println("Teve igual vero");
+        //if(disc.checarExistenciaVerossimilhanca("raciocinio logire")) System.out.println("Teve igual vero");
     }
     
 }

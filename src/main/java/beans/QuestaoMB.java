@@ -137,9 +137,6 @@ public class QuestaoMB extends BeanGeral{
 
     public List<Organizadora> getOrganizadoras() {
         List<Organizadora> orgs = new ArrayList<>();
-        Organizadora org = new Organizadora();
-        org.setId((long)0);
-        orgs.add(org);
         orgs.addAll(organizadoraServico.todasOrganizadoras());
         return orgs;
     }
@@ -156,8 +153,9 @@ public class QuestaoMB extends BeanGeral{
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         
         try {
-                        
-            todasQuestoes = questaoServico.questoesCriterio(disciplinaServico.retornaDisciplina((String) session.getAttribute("disciplinaSessao")), organizadoraServico.retornaOrganizadora((String) session.getAttribute("organizadoraSessao")));
+             
+            if(session.getAttribute("disciplinaSessao").equals("") && session.getAttribute("organizadoraSessao").equals("")) todasQuestoes = questaoServico.todasQuestoes();
+            else todasQuestoes = questaoServico.questoesCriterio(disciplinaServico.retornaDisciplina((String) session.getAttribute("disciplinaSessao")), organizadoraServico.retornaOrganizadora((String) session.getAttribute("organizadoraSessao")));
             
             tamanho = todasQuestoes.size();
             
@@ -171,9 +169,6 @@ public class QuestaoMB extends BeanGeral{
     
     public List<Disciplina> getDisciplinas(){
         List<Disciplina> disc = new ArrayList<>();
-        Disciplina di = new Disciplina();
-        di.setId((long)0);
-        disc.add(di);
         disc.addAll(disciplinaServico.todasDisciplinas());
         return disc;
     }
@@ -296,11 +291,9 @@ public class QuestaoMB extends BeanGeral{
             HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
             cliente = (Cliente) session.getAttribute("usuarioDaSessao");
             
-            int erros = cliente.getErradas();
-            int acertos = cliente.getCorretas();
-            
-            this.addMensagem("Erros: " + erros + " Acertos" + acertos);
-            
+            int erros = clienteServico.retornaCliente(cliente.getLogin()).getErradas();
+            int acertos = clienteServico.retornaCliente(cliente.getLogin()).getCorretas();
+                        
             cl.setLogin(cliente.getLogin());
             questao = questaoServico.retornaQuestao(id);
                                                                                                                                                                                                                                                                                                                                                                                                                                                           

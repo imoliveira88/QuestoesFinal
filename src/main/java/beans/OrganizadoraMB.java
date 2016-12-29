@@ -51,7 +51,7 @@ public class OrganizadoraMB extends BeanGeral{
                 this.addMensagem("Cadastro feito com sucesso!");
                 this.setOrganizadora(null);
             }else{
-                this.addMensagem("Já existe uma organizadora com o mesmo nome!");
+                this.addMensagem("Já existe uma organizadora com nome similar!");
             }
             return "organizadora";
         }catch(Exception e){

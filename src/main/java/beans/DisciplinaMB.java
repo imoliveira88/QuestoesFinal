@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -66,7 +65,7 @@ public class DisciplinaMB extends BeanGeral{
                 this.addMensagem("Cadastro feito com sucesso!");
                 this.setDisciplina("");
             }else{
-                this.addMensagem("Já existe uma disciplina com o mesmo nome!");
+                this.addMensagem("Já existe uma disciplina com nome similar!");
             }
           
             return "disciplina";

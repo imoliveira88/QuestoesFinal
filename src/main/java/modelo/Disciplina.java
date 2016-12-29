@@ -82,7 +82,6 @@ public class Disciplina implements Serializable, BaseEntity{
 
     @Override
     public boolean equals(Object obj) {
-        if(((Disciplina) obj).id == 0) return true;
         return ((Disciplina) obj).getDescricao().equals(this.descricao);
     }
     

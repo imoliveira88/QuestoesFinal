@@ -67,7 +67,6 @@ public class Organizadora implements Serializable, BaseEntity {
 
     @Override
     public boolean equals(Object object) {
-        if(((Organizadora) object).id == 0) return true;
         return ((Organizadora) object).getDescricao().equals(this.descricao);
     }
 
